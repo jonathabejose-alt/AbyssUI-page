@@ -1,14 +1,12 @@
-# 🌌 Abyss UI - El mejor Hub de Exploits para Roblox
+# 🌌 Abyss UI - El mejor ui de Exploits para Roblox
 
 <p align="center">
-  <img src="https://shields.io🟢-brightgreen" alt="Status">
-  <img src="https://shields.io" alt="Version">
-  <a href="https://discord.gg/X5UmfxqfQp"><img src="https://shields.io" alt="Discord"></a>
+  <b>Status:</b> 🟢 Online | <b>Versión:</b> v1 | <a href="https://discord.gg/X5UmfxqfQp"><b>Discord Oficial</b></a>
 </p>
 
 ---
 
-## 🚀 Instalación Rápida
+## 🚀 Script
 
 Para usar **Abyss UI**, simplemente copia y pega el siguiente loader en tu ejecutor favorito:
 
