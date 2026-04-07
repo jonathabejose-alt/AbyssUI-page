@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abyss UI - Exploit Hub</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-overlay"></div>
+  <header class="main-header">
+    <div class="container header-inner">
+      <a class="logo" href="#">Abyss UI</a>
+      <nav class="nav-links">
+        <a href="#scripts">LOADER</a>
+        <a href="#fast-flags">FAST FLAGS</a>
+        <a href="#injectors">INJECTOR</a>
+        <a href="#discord">DISCORD</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="hero-tag">UNFAIR by TZE</span>
+          <h1>ABYSS</h1>
+          <p>El mejor hub de exploits para Roblox. Descarga el loader, instala fast flags y únete al Discord para soporte y actualizaciones.</p>
+          <div class="hero-buttons">
+            <a class="btn btn-primary" href="#scripts">GET LOADER</a>
+            <a class="btn btn-outline" href="#discord">JOIN DISCORD</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div>
+              <span class="card-label">GET SCRIPT</span>
+              <p>Copy the loader instantly and inject it in your executor.</p>
+            </div>
+            <button class="copy-button" id="copyButton">COPY</button>
+          </div>
+          <pre id="loaderCode"><code>loadstring(game:HttpGet("https://raw.githubusercontent.com/jonathabejose-alt/AbyssUI/refs/heads/main/loander1"))()</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="supported" class="supported-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>SUPPORTED GAMES</h2>
+          <p>Juegos compatibles con Abyss UI para usar tus scripts.</p>
+        </div>
+        <div class="supported-grid">
+          <article class="support-card">Azure Latch</article>
+          <article class="support-card">Bite by Night</article>
+          <article class="support-card">Otros</article>
+        </div>
+      </div>
+    </section>
+
+    <section id="supported-executors" class="supported-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>SUPPORTED EXECUTORS</h2>
+          <p>Executors compatibles con Abyss UI. Instala Xeno desde el enlace de abajo para usarlo con tu loader.</p>
+        </div>
+        <div class="supported-grid">
+          <article class="support-card">Xeno</article>
+          <article class="support-card">Bunni</article>
+          <article class="support-card">Velocity</article>
+          <article class="support-card">Otros</article>
+        </div>
+        <div class="executor-link">
+          <a class="btn btn-outline" href="https://xeno.now/download" target="_blank">INSTALAR XENO</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="fast-flags" class="cards-section">
+      <div class="container section-split">
+        <div class="card card-left">
+          <h3>FAST FLAGS</h3>
+          <p>Descarga el archivo completo con las flags optimizadas para Abyss UI.</p>
+          <a class="btn btn-primary" href="fastflags.json" download="fastflags.json">DESCARGAR FAST FLAGS</a>
+        </div>
+        <div class="card card-right">
+          <h3>FAST FLAG</h3>
+          <pre><code>{
+  "DFFlagBrowserTrackerIdTelemetryEnabled": "False",
+  "DFFlagPreloadAsyncSupportTexturePack": "True",
+  "DFFlagTextureQualityOverrideEnabled": "True",
+  "DFFlagVideoCaptureServiceEnabled": "False",
+  "DFFlagSampleAndRefreshRakPing": "True",
+  "DFFlagRakNetUseSlidingWindow4": "True",
+  "DFFlagCoreScriptTelemetry2": "False",
+  "DFFlagEnableSoundPreloading": "True",
+  "DFFlagOptimizePartsInPart": "True",
+  "DFFlagDisableDPIScale": "True",
+  "DFFlagDebugPerfMode": "True"
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="injectors" class="injector-section">
+      <div class="container injector-card">
+        <div>
+          <span class="tag">Injector</span>
+          <h2>Descargar injector</h2>
+          <p>Instala el injector para usar Abyss UI con tus scripts.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.mediafire.com/file/s3bcm84ew92aljy/fastflaginjector.exe/file" target="_blank">DESCARGAR INJECTOR</a>
+      </div>
+    </section>
+
+    <section id="discord" class="discord-section">
+      <div class="container discord-card">
+        <div>
+          <h3>Únete a Discord</h3>
+          <p>Servidor activo para soporte, actualizaciones y ventas de scripts/fast flags.</p>
+        </div>
+        <a class="btn btn-outline" href="https://discord.gg/3YmdZr7UeF" target="_blank">discord.gg/3YmdZr7UeF</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>Not affiliated with Roblox Corp.</p>
+      <a class="btn btn-primary" href="#">TERMS & PRIVACY</a>
+    </div>
+  </footer>
+
+  <script>
+    const copyButton = document.getElementById('copyButton');
+    const loaderCode = document.getElementById('loaderCode').innerText;
+
+    copyButton.addEventListener('click', () => {
+      navigator.clipboard.writeText(loaderCode).then(() => {
+        copyButton.textContent = 'COPIED';
+        setTimeout(() => { copyButton.textContent = 'COPY'; }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>
