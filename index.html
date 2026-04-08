@@ -5,6 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abyss UI - Exploit Hub</title>
   <link rel="stylesheet" href="styles.css" />
+   <style>
+    .games-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .game-btn {
+      padding: 1rem;
+      background: var(--card-bg, #2a2a2a);
+      border: 1px solid var(--border-color, #444);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .game-btn:hover {
+      background: var(--hover-bg, #3a3a3a);
+    }
+    .status-active { border-left: 4px solid #4ade80; }
+    .status-frequent { border-left: 4px solid #facc15; }
+    .status-discontinued { border-left: 4px solid #ef4444; opacity: 0.7; }
+  </style>
 </head>
 <body>
   <div class="page-overlay"></div>
@@ -46,16 +69,30 @@
       </div>
     </section>
 
-    <section id="supported" class="supported-section">
+  <section id="supported" class="supported-section">
       <div class="container">
         <div class="section-header">
-          <h2>SUPPORTED GAMES</h2>
-          <p>Juegos compatibles con Abyss UI para usar tus scripts.</p>
+          <h2>Abyss ui Sopport games</h2>
+          <p>🟢 = Active Updates. 🟡 = Frequent Updates. 🔴soon. </p>
         </div>
-        <div class="supported-grid">
-          <article class="support-card">Azure Latch</article>
-          <article class="support-card">Bite by Night</article>
-          <article class="support-card">Otros</article>
+        <div class="games-buttons">
+          <div class="game-btn status-active">Azure Latch 🟢</div>
+          <div class="game-btn status-active">Bite By Night 🟢 </div>
+          <div class="game-btn status-discontinued">Slap Battle🔴 </div>
+          <div class="game-btn status-discontinued">Flee The Facility🔴 </div>
+          <div class="game-btn status-discontinued">Jujutsu Shenanigans🔴 </div>
+          <div class="game-btn status-discontinued">SAKTKIA51🔴 </div>
+          <div class="game-btn status-discontinued">Life In Prison 🔴</div>
+          <div class="game-btn status-discontinued">Boxing League🔴</div>
+          <div class="game-btn status-discontinued">Tower of Hell🔴</div>
+          <div class="game-btn status-discontinued">Gang Up On People Simulator🔴</div>
+          <div class="game-btn status-discontinued">Your Bizarre Adventure🔴</div>
+          <div class="game-btn status-discontinued">Basketball: Zero🔴</div>
+          <div class="game-btn status-discontinued">Generic Roleplay Gaem🔴</div>
+          <div class="game-btn status-discontinued">OP Battlegrounds🔴</div>
+          <div class="game-btn status-discontinued">Arsenal🔴</div>
+          <div class="game-btn status-discontinued">Blue Lock: Skibidi🔴</div>
+          <div class="game-btn status-discontinued">Neo Tennis🔴</div>
         </div>
       </div>
     </section>
