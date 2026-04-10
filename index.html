@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abyss UI - Exploit Hub</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* Estilos integrados para componentes dinámicos */
+   <style>
     .games-buttons {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -19,7 +18,7 @@
       border: 1px solid var(--border-color, #444);
       border-radius: 8px;
       text-align: center;
-      cursor: none; /* Ocultamos el cursor nativo para usar el tuyo */
+      cursor: pointer;
       transition: all 0.2s;
     }
     .game-btn:hover {
@@ -29,7 +28,16 @@
     .status-frequent { border-left: 4px solid #facc15; }
     .status-discontinued { border-left: 4px solid #ef4444; opacity: 0.7; }
 
-    /* Estilos del reproductor de música en el nav */
+    /* Ajuste para el botón de música */
+    .music-nav-btn {
+      padding: 8px 16px !important;
+      font-size: 0.75rem !important;
+      border-radius: 12px !important;
+      cursor: pointer;
+      margin: 0 !important;
+    }
+
+    /* Estilo para el contenedor del reproductor en el menú */
     .audio-controls {
       display: flex;
       align-items: center;
@@ -41,43 +49,30 @@
       margin-left: 10px;
     }
 
-    .music-nav-btn {
-      padding: 8px 16px !important;
-      font-size: 0.75rem !important;
-      border-radius: 12px !important;
-      cursor: none;
-      margin: 0 !important;
-    }
-
     #volumeSlider {
       width: 70px;
-      cursor: none;
-      accent-color: #7d3cff;
+      cursor: pointer;
+      accent-color: #7d3cff; /* Color morado como tu tema */
+    }
+    
+    /* Esto es lo nuevo para que el círculo se vea pro */
+    #volumeSlider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      background: #7d3cff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(125, 60, 255, 0.8);
+      border: 2px solid white;
     }
 
-    /* Estilo del cursor personalizado (Imagen) */
-    .custom-cursor {
-      position: fixed;
-      width: 32px;
-      height: 32px;
-      background-image: url('puntero_neon.png'); /* Asegúrate de usar el PNG sin fondo */
-      background-size: contain;
-      background-repeat: no-repeat;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      display: block;
-    }
-
-    /* Ocultar cursor nativo en toda la página */
-    html, body, a, button, input {
-      cursor: none !important;
-    }
   </style>
 </head>
 <body>
-  <div class="custom-cursor"></div>
   <div class="page-overlay"></div>
+  
+  <div class="custom-cursor"></div>
   
   <audio id="bgMusic" loop>
     <source src="leberch-piano-513745.mp3" type="audio/mpeg">
@@ -228,22 +223,34 @@
   </footer>
 
   <script>
-    // Lógica del Cursor Personalizado
+    // Custom Cursor JS - Perfect image follow, no native mouse
     const customCursor = document.querySelector('.custom-cursor');
-    
+    let mouseX = 0, mouseY = 0;
+    let currentX = 0, currentY = 0;
+    const speed = 0.2; // Smooth lerp
+
+    function animateCursor() {
+      currentX += (mouseX - currentX) * speed;
+      currentY += (mouseY - currentY) * speed;
+      customCursor.style.left = mouseX + 'px';
+      customCursor.style.top = mouseY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+
     document.addEventListener('mousemove', (e) => {
-      customCursor.style.left = e.clientX + 'px';
-      customCursor.style.top = e.clientY + 'px';
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Pointer state for hoverables
+      const hoverables = document.querySelectorAll('a, button, [class*="btn"], .game-btn, .copy-button, input[type="range"], .music-nav-btn');
+      const isHovering = hoverables.some(el => el.matches(':hover'));
+      customCursor.classList.toggle('pointer', isHovering);
     });
 
-    // Cambiar cursor al pasar sobre elementos interactivos
-    const hoverables = document.querySelectorAll('a, button, .game-btn, .copy-button, #volumeSlider');
-    hoverables.forEach(el => {
-      el.addEventListener('mouseenter', () => customCursor.style.transform = 'translate(-50%, -50%) scale(1.2)');
-      el.addEventListener('mouseleave', () => customCursor.style.transform = 'translate(-50%, -50%) scale(1)');
-    });
+    // Start animation
+    animateCursor();
 
-    // Botón Copiar
+    // Copy button
     const copyButton = document.getElementById('copyButton');
     const loaderCode = document.getElementById('loaderCode').innerText;
 
@@ -254,7 +261,7 @@
       });
     });
 
-    // Controles de Música
+    // Music controls
     const musicBtn = document.getElementById('musicBtn');
     const bgMusic = document.getElementById('bgMusic');
     const volumeSlider = document.getElementById('volumeSlider');
@@ -267,7 +274,7 @@
 
     musicBtn.addEventListener('click', () => {
       if (bgMusic.paused) {
-        bgMusic.play().catch(err => console.log("Interacción requerida"));
+        bgMusic.play().catch(e => console.log('Autoplay blocked'));
         musicBtn.innerHTML = '⏸ PAUSE';
         musicBtn.classList.remove('btn-outline');
         musicBtn.classList.add('btn-primary');
