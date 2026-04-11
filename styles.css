@@ -3,7 +3,8 @@
 }
 
 :root {
-  color-scheme: dark;
+color-scheme: dark;
+  --new-color: #00ff41;
 }
 
 body {
@@ -251,6 +252,170 @@ pre {
   letter-spacing: 0.08em;
   color: #ffffff;
   text-align: center;
+}
+
+/* Executor buttons styles */
+.executor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.pc-mobile-section {
+  margin-bottom: 1rem;
+}
+
+.executor-grid.pc-mobile-section {
+  margin-bottom: 2rem;
+}
+
+.executor-btn {
+  padding: 1rem 1.2rem;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.8rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  border: none;
+  cursor: pointer;
+  min-height: 55px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .executor-btn {
+    font-size: 0.85rem;
+    padding: 0.9rem 1rem;
+    gap: 0.5rem;
+  }
+}
+
+.executor-btn::before,
+.executor-btn::after {
+  font-weight: normal !important;
+}
+
+.executor-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.executor-btn.status-active {
+  background: linear-gradient(135deg, #004d18, #006622, #004d18);
+  color: #ffffff00;
+  box-shadow: 0 10px 30px rgba(0, 255, 65, 0.2);
+}
+
+.executor-btn.status-active::before {
+  content: '🟢';
+  position: absolute;
+  right: 1rem;
+  font-size: 1.2rem;
+}
+
+.executor-btn.status-undetected::before {
+  content: '🟣';
+  position: absolute;
+  right: 1rem;
+  font-size: 1.2rem;
+}
+
+.executor-btn.status-frequent {
+  background: linear-gradient(135deg, #facc15, #eab308, #fde047);
+  color: #1e293b;
+  box-shadow: 0 10px 30px rgba(250, 204, 21, 0.4);
+  font-weight: 900;
+}
+
+.executor-btn.status-frequent::before {
+  content: '⚠️';
+  position: absolute;
+  right: 1rem;
+  font-size: 1.2rem;
+}
+
+.executor-btn.status-broken {
+  background: linear-gradient(135deg, #ef4444, #dc2626, #f87171);
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+  opacity: 0.85;
+}
+
+.executor-btn.status-broken::before {
+  content: '❌';
+  position: absolute;
+  right: 5rem;
+  font-size: 1.2rem;
+}
+
+/* Detected states */
+.executor-btn.detected-green::after {
+  content: ' | 🟢';
+  position: absolute;
+  right: 3.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  opacity: 0.9;
+  font-weight: normal;
+}
+
+.executor-btn.detected-purple::after {
+  content: ' | 🟣';
+  position: absolute;
+  right: 3.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  opacity: 0.9;
+  font-weight: normal;
+}
+
+.executor-btn.detected-red::after {
+  content: ' | 🔴';
+  position: absolute;
+  right: 3.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  opacity: 0.9;
+  font-weight: normal;
+}
+
+.executor-btn.status-active::before,
+.executor-btn.status-frequent::before,
+.executor-btn.status-broken::before {
+  right: 5rem;
+}
+
+@media (max-width: 900px) {
+  .executor-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .executor-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .executor-btn {
+    padding: 1.25rem 1.5rem;
+    font-size: 1rem;
+  }
 }
 
 .section-split {
