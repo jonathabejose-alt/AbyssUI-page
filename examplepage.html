@@ -8,7 +8,7 @@
   <!-- PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AVu6vjxuhWH-sjHHwkVb5YuY4IyQawo66QVx5nET8lJ807efyRiQ-Qwyej01U10hhdIEUbsZ7BBWZQBE&currency=USD&intent=capture"></script>
   <style>
-    /* ===== TU CSS ORIGINAL COMPLETO ===== */
+    /* ===== TU CSS ORIGINAL COMPLETO (NO SE TOCA NADA) ===== */
     * { box-sizing: border-box; }
     :root { color-scheme: dark; --new-color: #00ff41; }
     body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #06060d; color: #ffffff; }
@@ -142,8 +142,6 @@
     .track-play { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; background: rgba(125, 60, 255, 0.2); border: 1px solid rgba(125, 60, 255, 0.3); color: #7d3cff; cursor: pointer; }
     .track-del { padding: 4px 9px; border-radius: 6px; font-size: 0.7rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #ef4444; cursor: pointer; }
     .s-reset-btn { padding: 7px 16px; border-radius: 8px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #ef4444; cursor: pointer; }
-    .s-clear-history-btn { padding: 7px 16px; border-radius: 8px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #ff6b6b; cursor: pointer; font-size: 0.8rem; font-weight: 700; margin-left: 8px; }
-    .s-clear-history-btn:hover { background: rgba(239, 68, 68, 0.3); }
 
     /* Toast */
     .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: rgba(11, 11, 24, 0.95); border: 1px solid #7d3cff; padding: 10px 22px; border-radius: 999px; color: #00ff41; z-index: 600; opacity: 0; transition: all 0.35s; }
@@ -151,6 +149,7 @@
     .toast.error { border-color: #ef4444; color: #ef4444; }
 
     /* Cursor */
+    /* Regla base: cursor auto. Se oculta SOLO cuando el cursor personalizado está activo */
     * { cursor: auto; }
     body.custom-cursor-active * { cursor: none !important; }
     
@@ -164,7 +163,7 @@
       left: -16px; 
       top: -16px; 
       filter: drop-shadow(0 0 8px rgba(125, 60, 255, 0.6)); 
-      display: none;
+      display: none; /* Oculto por defecto */
       transition: filter 0.2s, width 0.1s, height 0.1s;
     }
     body.custom-cursor-active .custom-cursor { display: block; }
@@ -173,7 +172,7 @@
     /* Particles */
     #particlesCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; display: none; }
 
-    /* ===== TIENDA ===== */
+    /* ===== TIENDA (CSS AGREGADO) ===== */
     .shop-section { padding: 80px 0; }
     .shop-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
     .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -268,7 +267,7 @@
     <section class="hero-section" id="scripts">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <span class="hero-tag">Page Made by TZE</span>
+          <span class="hero-tag">UNFAIR by TZE</span>
           <h1>ABYSS</h1>
           <p>El mejor hub de exploits para Roblox. Descarga el loader, instala fast flags y únete al Discord para soporte y actualizaciones.</p>
           <div class="hero-buttons">
@@ -421,6 +420,7 @@
       </div>
     </section>
 
+    <!-- ===== TIENDA (HTML AGREGADO) ===== -->
     <section id="shop" class="shop-section">
       <div class="container">
         <div class="section-header">
@@ -569,15 +569,7 @@
           <div class="s-row"><div><div class="s-label">Animaciones CSS</div></div><label class="s-toggle"><input type="checkbox" id="animationsToggle" checked><span class="s-toggle-slider"></span></label></div>
           <div class="s-row"><div><div class="s-label">Partículas de fondo</div></div><label class="s-toggle"><input type="checkbox" id="particlesToggle"><span class="s-toggle-slider"></span></label></div>
         </div>
-        <div class="s-section"><div class="s-section-title">Sistema</div>
-          <div class="s-row" style="border:none; flex-wrap: wrap;">
-            <div style="display: flex; gap: 8px; width: 100%;">
-              <button class="s-reset-btn" id="resetAllBtn">⚙️ RESET AJUSTES</button>
-              <button class="s-clear-history-btn" id="clearHistoryBtn">🗑️ BORRAR HISTORIAL</button>
-            </div>
-            <small style="color:#888; font-size:0.7rem; margin-top:8px; width:100%;">Reset borra ajustes visuales. Borrar historial elimina tus claves guardadas.</small>
-          </div>
-        </div>
+        <div class="s-section"><div class="s-section-title">Sistema</div><div class="s-row" style="border:none"><div><div class="s-label">Resetear todo</div></div><button class="s-reset-btn" id="resetAllBtn">RESET</button></div></div>
       </div>
     </div>
   </div>
@@ -641,12 +633,11 @@
       customCursor.style.filter = `drop-shadow(0 0 8px ${color})`;
     }
     function updateCursorSize(size) {
-      const sizeNum = parseInt(size);
-      customCursor.style.width = `${sizeNum}px`;
-      customCursor.style.height = `${sizeNum}px`;
-      customCursor.style.left = `-${sizeNum/2}px`;
-      customCursor.style.top = `-${sizeNum/2}px`;
-      cursorSizeVal.textContent = `${sizeNum}px`;
+      customCursor.style.width = `${size}px`;
+      customCursor.style.height = `${size}px`;
+      customCursor.style.left = `-${size/2}px`;
+      customCursor.style.top = `-${size/2}px`;
+      cursorSizeVal.textContent = `${size}px`;
     }
     function updateCursorState(enabled) {
       if (enabled) {
@@ -748,12 +739,15 @@
       document.querySelectorAll('.tab-pill').forEach(p => p.classList.toggle('active', p.dataset.section === current || (current === '' && p.dataset.section === 'scripts')));
     });
 
-    // ===== ACENTO DE COLOR =====
+    // ===== ACENTO DE COLOR (CORREGIDO) =====
     function applyAccent(color1, color2) {
+      // Actualizar variable CSS (opcional)
       document.documentElement.style.setProperty('--new-color', color1);
       
+      // Actualizar gradientes y bordes en la UI
       const gradient = `linear-gradient(90deg, ${color1}, ${color2})`;
       
+      // Elementos que usan el gradiente
       document.querySelectorAll('.btn-primary, .hero-tag, .tag, .product-badge, .s-apply-btn, .s-toggle input:checked+.s-toggle-slider, .settings-header h2, .copy-key-small, .copy-key-btn, .close-help, .help-content .close-help').forEach(el => {
         if (el.tagName === 'H2') {
           el.style.background = gradient;
@@ -764,6 +758,7 @@
         }
       });
       
+      // Elementos que usan el color sólido o borde
       document.querySelectorAll('.btn-primary, .product-card:hover, .product-card.selected, .success-content, .toast, .cart-item-price, .total-amount, .product-price, .history-item strong, .input-hint a, .s-range-val, .track-play, .floating-music-btn').forEach(el => {
         if (el.classList.contains('btn-primary')) return;
         if (el.classList.contains('toast')) {
@@ -773,6 +768,7 @@
         }
       });
       
+      // Actualizar filtro del cursor
       updateCursorColor(color1);
       
       showToast(`Acento actualizado`, false);
@@ -789,68 +785,6 @@
       });
     });
 
-    // ===== PARTÍCULAS =====
-    const particlesToggle = document.getElementById('particlesToggle');
-    const pCanvas = document.getElementById('particlesCanvas');
-    const pCtx = pCanvas.getContext('2d');
-    let particlesActive = false;
-    let raf = null;
-
-    function startParticles() {
-      if (raf) return;
-      particlesActive = true;
-      const dots = Array.from({ length: 70 }, () => ({ 
-        x: Math.random() * innerWidth, 
-        y: Math.random() * innerHeight, 
-        vx: (Math.random() - 0.5) * 0.5, 
-        vy: (Math.random() - 0.5) * 0.5, 
-        r: Math.random() * 1.8 + 0.4 
-      }));
-      
-      (function draw() {
-        if (!particlesActive) {
-          pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-          raf = null;
-          return;
-        }
-        pCanvas.width = innerWidth; 
-        pCanvas.height = innerHeight;
-        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-        dots.forEach(d => { 
-          d.x += d.vx; 
-          d.y += d.vy; 
-          if (d.x < 0 || d.x > pCanvas.width) d.vx *= -1; 
-          if (d.y < 0 || d.y > pCanvas.height) d.vy *= -1; 
-          pCtx.beginPath(); 
-          pCtx.arc(d.x, d.y, d.r, 0, Math.PI * 2); 
-          pCtx.fillStyle = 'rgba(125,60,255,0.7)'; 
-          pCtx.fill(); 
-        });
-        raf = requestAnimationFrame(draw);
-      })();
-    }
-
-    function stopParticles() {
-      particlesActive = false;
-      pCanvas.style.display = 'none';
-      if (raf) {
-        cancelAnimationFrame(raf);
-        raf = null;
-      }
-    }
-
-    function toggleParticles(enabled) {
-      if (enabled) {
-        pCanvas.style.display = 'block';
-        startParticles();
-      } else {
-        stopParticles();
-      }
-      saveSettings();
-    }
-
-    particlesToggle.addEventListener('change', (e) => toggleParticles(e.target.checked));
-
     // ===== SETTINGS =====
     function saveSettings() {
       const settings = {
@@ -863,7 +797,6 @@
         cursorSize: cursorSizeSlider.value,
         accentColor1: document.querySelector('.accent-preset.active')?.dataset.a1 || '#7d3cff',
         accentColor2: document.querySelector('.accent-preset.active')?.dataset.a2 || '#ff5e38',
-        particlesEnabled: particlesToggle.checked,
         tracks: tracks.map(t => ({ name: t.name, url: t.url }))
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
@@ -913,11 +846,6 @@
         }
       }
       
-      if (saved.particlesEnabled !== undefined) {
-        particlesToggle.checked = saved.particlesEnabled;
-        toggleParticles(saved.particlesEnabled);
-      }
-      
       if (saved.tracks) { tracks = saved.tracks; renderTrackList(); }
     }
 
@@ -941,23 +869,11 @@
       saveSettings();
     });
 
-    // ===== RESET (SOLO AJUSTES VISUALES Y CARRITO) =====
     document.getElementById('resetAllBtn').addEventListener('click', () => { 
-      localStorage.removeItem(STORAGE_KEY);        // Solo ajustes visuales
-      localStorage.removeItem('abyss_cart');       // Solo carrito
-      // NO borramos 'abyss_purchases' - Protegemos las claves
-      showToast('⚙️ Ajustes reseteados. Tus claves están a salvo.', false);
-      setTimeout(() => location.reload(), 1000);
-    });
-
-    // ===== BORRAR HISTORIAL DE COMPRAS (CON CONFIRMACIÓN) =====
-    document.getElementById('clearHistoryBtn').addEventListener('click', () => {
-      if (confirm('⚠️ ¿Estás seguro? Esta acción ELIMINARÁ PERMANENTEMENTE todo tu historial de compras y claves generadas. No se puede deshacer.')) {
-        localStorage.removeItem('abyss_purchases');
-        purchases = [];
-        renderHistory();
-        showToast('🗑️ Historial de compras eliminado', false);
-      }
+      localStorage.removeItem(STORAGE_KEY); 
+      localStorage.removeItem('abyss_cart'); 
+      localStorage.removeItem('abyss_purchases'); 
+      location.reload(); 
     });
 
     // ===== COPY LOADER =====
@@ -1106,6 +1022,21 @@
       showToast(`${files.length} pista(s) agregada(s)`);
       e.target.value = '';
     });
+
+    // ===== PARTICLES =====
+    let raf = null;
+    const pCanvas = document.getElementById('particlesCanvas'), pCtx = pCanvas.getContext('2d');
+    function startParticles() {
+      if (raf) return;
+      const dots = Array.from({ length: 70 }, () => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, r: Math.random() * 1.8 + 0.4 }));
+      (function draw() {
+        pCanvas.width = innerWidth; pCanvas.height = innerHeight;
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        dots.forEach(d => { d.x += d.vx; d.y += d.vy; if (d.x < 0 || d.x > pCanvas.width) d.vx *= -1; if (d.y < 0 || d.y > pCanvas.height) d.vy *= -1; pCtx.beginPath(); pCtx.arc(d.x, d.y, d.r, 0, Math.PI * 2); pCtx.fillStyle = 'rgba(125,60,255,0.7)'; pCtx.fill(); });
+        raf = requestAnimationFrame(draw);
+      })();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'p' || e.key === 'P') { pCanvas.style.display = pCanvas.style.display === 'block' ? 'none' : 'block'; if (pCanvas.style.display === 'block') startParticles(); else if (raf) { cancelAnimationFrame(raf); raf = null; } } });
 
     // ===== INICIALIZAR =====
     loadSettings();
