@@ -9,32 +9,14 @@
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         :root {
-            --accent: #7c3aed;
-            --accent2: #a78bfa;
-            --bg: #0a0a0f;
-            --surface: #0c0c14;
-            --border: #20202c;
-            --text: #ededf5;
-            --muted: #9ca3af;
-            --bg-image: none;
-            --bg-opacity: 0.08;
-            --card-bg: rgba(12,12,20,0.95);
+            --accent: #7c3aed; --accent2: #a78bfa;
+            --bg: #0a0a0f; --surface: #0c0c14;
+            --border: #20202c; --text: #ededf5;
+            --muted: #9ca3af; --card-bg: rgba(12,12,20,0.95);
         }
         body {
-            background: var(--bg);
-            font-family: 'Inter', system-ui, sans-serif;
-            color: var(--text);
-            line-height: 1.5;
-            overflow-x: hidden;
-        }
-        body::before {
-            content: '';
-            position: fixed; inset: 0;
-            background-image: var(--bg-image);
-            background-size: cover; background-position: center;
-            background-repeat: no-repeat;
-            opacity: var(--bg-opacity);
-            pointer-events: none; z-index: -2;
+            background: var(--bg); font-family: 'Inter', system-ui, sans-serif;
+            color: var(--text); line-height: 1.5; overflow-x: hidden;
         }
         .bg-glow {
             position: fixed; top:0; left:0; width:100%; height:100%;
@@ -223,18 +205,11 @@
         </div>
     </div>
     
-    <div class="settings-group"><h3>🖼️ Fondo</h3>
-        <div class="setting-row"><label>Imagen</label><input type="file" id="bgImageInput" accept="image/*" onchange="changeBackground(this)"></div>
-        <div class="setting-row"><label>Opacidad</label><input type="range" id="bgOpacity" min="0" max="100" value="8" oninput="changeBgOpacity(this.value)"></div>
-        <button class="flag-btn" style="width:100%" onclick="removeBackground()"><i data-lucide="trash-2"></i> Quitar fondo</button>
-        <div class="current-music" id="bgInfo"></div>
-    </div>
-    
     <div class="settings-group"><h3>🎵 Música</h3>
         <div class="setting-row"><label>Archivo</label><input type="file" id="musicFileInput" accept="audio/*" onchange="changeMusic(this)"></div>
         <div class="setting-row"><label>Volumen</label><input type="range" id="settingsVolume" min="0" max="1" step="0.01" value="0.2" oninput="updateVolume(this.value)"></div>
         <div class="setting-row"><label>Auto-play</label><select id="autoPlaySetting" onchange="saveAllSettings()"><option value="true">Sí</option><option value="false">No</option></select></div>
-        <button class="flag-btn" style="width:100%" onclick="resetMusic()"><i data-lucide="rotate-ccw"></i> Restaurar música</button>
+        <button class="flag-btn" style="width:100%;margin-top:8px" onclick="resetMusic()"><i data-lucide="rotate-ccw"></i> Restaurar música por defecto</button>
         <div class="current-music" id="musicInfo"></div>
     </div>
     
@@ -344,12 +319,13 @@
     </main>
 </div>
 
-<audio id="bgMusic" loop><source src="leberch-piano-513745.mp3" type="audio/mpeg"></audio>
+<audio id="bgMusic" loop></audio>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
-
+    const DEFAULT_MUSIC = 'leberch-piano-513745.mp3';
+    
     // ═══════════════ TABS ═══════════════
     function activateSideTab(tabId) {
         document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active-section'));
@@ -360,20 +336,95 @@ document.addEventListener('DOMContentLoaded', function() {
             if (b.getAttribute('data-side-tab') === tabId) b.classList.add('active');
         });
     }
-    
     document.querySelectorAll('.tab-side').forEach(function(btn) {
         btn.onclick = function() { activateSideTab(this.getAttribute('data-side-tab')); };
     });
     window.activateSideTab = activateSideTab;
 
+    // ═══════════════ MUSIC ═══════════════
+    const audio = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    let currentMusic = localStorage.getItem('abyss_music') || DEFAULT_MUSIC;
+    
+    function loadMusic(src) {
+        currentMusic = src;
+        audio.innerHTML = `<source src="${src}" type="audio/mpeg">`;
+        audio.load();
+        audio.volume = parseFloat(document.getElementById('settingsVolume').value || 0.2);
+        updateMusicInfo();
+    }
+    
+    function updateMusicUI() {
+        musicBtn.textContent = audio.paused ? '▶' : '⏸';
+        musicBtn.classList.toggle('playing', !audio.paused);
+    }
+    
+    function updateMusicInfo() {
+        const isDefault = currentMusic === DEFAULT_MUSIC;
+        document.getElementById('musicInfo').textContent = isDefault ? '🎵 Música por defecto' : '✅ Música personalizada';
+    }
+    
+    musicBtn.onclick = function() {
+        if (audio.paused) {
+            audio.play().catch(() => showToast('Haz clic para iniciar'));
+        } else {
+            audio.pause();
+        }
+        updateMusicUI();
+        saveAllSettings();
+    };
+    
+    document.getElementById('volumeSlider').oninput = function() {
+        audio.volume = parseFloat(this.value);
+        document.getElementById('settingsVolume').value = this.value;
+        saveAllSettings();
+    };
+    
+    window.updateVolume = function(v) {
+        audio.volume = parseFloat(v);
+        document.getElementById('volumeSlider').value = v;
+        saveAllSettings();
+    };
+    
+    window.changeMusic = function(input) {
+        const file = input.files[0];
+        if (!file) return;
+        
+        const url = URL.createObjectURL(file);
+        localStorage.setItem('abyss_music_name', file.name);
+        localStorage.setItem('abyss_music', url);
+        
+        audio.innerHTML = `<source src="${url}" type="audio/mpeg">`;
+        audio.load();
+        currentMusic = url;
+        updateMusicInfo();
+        
+        if (document.getElementById('autoPlaySetting').value === 'true') {
+            audio.play().catch(() => {});
+            updateMusicUI();
+        }
+        
+        saveAllSettings();
+        showToast('✅ Música cambiada: ' + file.name);
+    };
+    
+    window.resetMusic = function() {
+        localStorage.removeItem('abyss_music');
+        localStorage.removeItem('abyss_music_name');
+        audio.innerHTML = `<source src="${DEFAULT_MUSIC}" type="audio/mpeg">`;
+        audio.load();
+        currentMusic = DEFAULT_MUSIC;
+        updateMusicInfo();
+        saveAllSettings();
+        showToast('✅ Música restaurada');
+    };
+
     // ═══════════════ SETTINGS ═══════════════
-    const STORAGE_KEY = 'abyss_settings';
-    const DEFAULT_MUSIC = 'leberch-piano-513745.mp3';
-    const defaults = { accent: '#7c3aed', volume: 0.2, autoPlay: true, bgOpacity: 8 };
-    let settings = loadSettings();
+    const STORAGE_KEY = 'abyss_config';
+    const defaults = { accent: '#7c3aed', volume: 0.2, autoPlay: true };
     
     function loadSettings() {
-        try { const s = localStorage.getItem(STORAGE_KEY); return s ? {...defaults, ...JSON.parse(s)} : {...defaults}; }
+        try { return {...defaults, ...JSON.parse(localStorage.getItem(STORAGE_KEY))}; }
         catch(e) { return {...defaults}; }
     }
     
@@ -381,11 +432,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const s = {
             accent: document.getElementById('accentColor').value,
             volume: parseFloat(document.getElementById('settingsVolume').value),
-            autoPlay: document.getElementById('autoPlaySetting').value === 'true',
-            bgOpacity: parseInt(document.getElementById('bgOpacity').value)
+            autoPlay: document.getElementById('autoPlaySetting').value === 'true'
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-        showToast('✅ Configuración guardada');
     }
     
     function applyAccent(color) {
@@ -394,72 +443,48 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('accentColor').value = color;
         document.querySelectorAll('.color-preset').forEach(p => p.classList.toggle('active', p.style.background === color));
     }
-    window.changeAccent = function(c) { applyAccent(c); saveAllSettings(); };
     
-    function applyBackground() {
-        const bg = localStorage.getItem('abyss_bg_image');
-        const op = parseInt(document.getElementById('bgOpacity').value) / 100;
-        document.documentElement.style.setProperty('--bg-image', bg ? `url(${bg})` : 'none');
-        document.documentElement.style.setProperty('--bg-opacity', bg ? op : 0.08);
-        document.getElementById('bgInfo').textContent = bg ? '✅ Fondo activo' : 'Sin fondo';
-    }
-    window.changeBackground = function(input) {
-        const f = input.files[0];
-        if (f) {
-            const r = new FileReader();
-            r.onload = function(e) { localStorage.setItem('abyss_bg_image', e.target.result); applyBackground(); saveAllSettings(); showToast('✅ Fondo actualizado'); };
-            r.readAsDataURL(f);
-        }
-    };
-    window.changeBgOpacity = function(v) { document.documentElement.style.setProperty('--bg-opacity', v/100); saveAllSettings(); };
-    window.removeBackground = function() { localStorage.removeItem('abyss_bg_image'); applyBackground(); saveAllSettings(); showToast('✅ Fondo eliminado'); };
+    let settings = loadSettings();
+    applyAccent(settings.accent);
     
-    const audio = document.getElementById('bgMusic');
-    const musicBtn = document.getElementById('musicBtn');
+    // Load saved music or default
+    const savedMusic = localStorage.getItem('abyss_music');
+    loadMusic(savedMusic || DEFAULT_MUSIC);
     
-    function applyMusic() {
-        const cm = localStorage.getItem('abyss_custom_music');
-        audio.querySelector('source').src = cm || DEFAULT_MUSIC;
-        audio.load(); audio.volume = settings.volume;
-        document.getElementById('musicInfo').textContent = cm ? '✅ Personalizada' : 'Por defecto';
-    }
-    window.changeMusic = function(input) {
-        const f = input.files[0];
-        if (f) {
-            const r = new FileReader();
-            r.onload = function(e) { localStorage.setItem('abyss_custom_music', e.target.result); audio.querySelector('source').src = e.target.result; audio.load(); if(settings.autoPlay){audio.play().catch(()=>{});updateMusicUI();} saveAllSettings(); showToast('✅ Música cambiada'); };
-            r.readAsDataURL(f);
-        }
-    };
-    window.resetMusic = function() { localStorage.removeItem('abyss_custom_music'); audio.querySelector('source').src = DEFAULT_MUSIC; audio.load(); saveAllSettings(); showToast('✅ Música restaurada'); };
-    window.updateVolume = function(v) { audio.volume = parseFloat(v); document.getElementById('volumeSlider').value = v; saveAllSettings(); };
-    function updateMusicUI() { musicBtn.textContent = audio.paused ? '▶' : '⏸'; musicBtn.classList.toggle('playing', !audio.paused); }
-    musicBtn.onclick = function() { audio.paused ? audio.play().catch(()=>{}) : audio.pause(); updateMusicUI(); saveAllSettings(); };
-    document.getElementById('volumeSlider').oninput = function() { updateVolume(this.value); };
-    
-    applyAccent(settings.accent); applyBackground(); applyMusic();
+    audio.volume = settings.volume;
     document.getElementById('settingsVolume').value = settings.volume;
     document.getElementById('volumeSlider').value = settings.volume;
-    document.getElementById('bgOpacity').value = settings.bgOpacity;
     document.getElementById('autoPlaySetting').value = settings.autoPlay;
-    if (settings.autoPlay) { audio.play().catch(()=>{}); }
+    
+    if (settings.autoPlay) { audio.play().catch(() => {}); }
     updateMusicUI();
+    updateMusicInfo();
+    
+    window.changeAccent = function(c) { applyAccent(c); saveAllSettings(); };
     
     window.resetAllSettings = function() {
         localStorage.clear();
         settings = {...defaults};
         applyAccent(defaults.accent);
-        document.documentElement.style.setProperty('--bg-image', 'none');
-        document.getElementById('bgOpacity').value = 8;
+        audio.innerHTML = `<source src="${DEFAULT_MUSIC}" type="audio/mpeg">`;
+        audio.load();
+        audio.volume = 0.2;
+        currentMusic = DEFAULT_MUSIC;
         document.getElementById('settingsVolume').value = 0.2;
         document.getElementById('volumeSlider').value = 0.2;
         document.getElementById('autoPlaySetting').value = true;
-        audio.querySelector('source').src = DEFAULT_MUSIC; audio.load(); audio.volume = 0.2;
+        updateMusicInfo();
         showToast('✅ Todo restablecido');
     };
     
-    window.openSettings = function() { document.getElementById('settingsPanel').classList.add('open'); document.getElementById('settingsOverlay').classList.add('open'); };
-    window.closeSettings = function() { document.getElementById('settingsPanel').classList.remove('open'); document.getElementById('settingsOverlay').classList.remove('open'); };
+    window.openSettings = function() {
+        document.getElementById('settingsPanel').classList.add('open');
+        document.getElementById('settingsOverlay').classList.add('open');
+    };
+    window.closeSettings = function() {
+        document.getElementById('settingsPanel').classList.remove('open');
+        document.getElementById('settingsOverlay').classList.remove('open');
+    };
     window.saveAllSettings = saveAllSettings;
 
     function showToast(msg) {
@@ -478,32 +503,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ═══════════════ FAST FLAGS ═══════════════
     const flagsStr = JSON.stringify({"DFFlagDebugPerfMode":"True","DFFlagDisableDPIScale":"True","DFFlagOptimizePartsInPart":"True","FFlagFixLowPerformance":"True","DFFlagRenderCulling":"True"}, null, 2);
-    document.getElementById('copyFlags').onclick = function() { navigator.clipboard.writeText(flagsStr); showToast('✅ Copiado'); };
-    document.getElementById('downloadFlags').onclick = function() {
+    document.getElementById('copyFlags').onclick = () => { navigator.clipboard.writeText(flagsStr); showToast('✅ Copiado'); };
+    document.getElementById('downloadFlags').onclick = () => {
         const blob = new Blob([flagsStr], {type:'application/json'});
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
         a.download = 'fastflags.json'; a.click(); URL.revokeObjectURL(a.href);
     };
-    document.getElementById('toggleGuide').onclick = function() {
+    document.getElementById('toggleGuide').onclick = () => {
         const g = document.getElementById('guideMsg');
         g.style.display = g.style.display === 'none' ? 'block' : 'none';
     };
 
     // ═══════════════ EXECUTORS ═══════════════
-    const EXPLOITS_API = 'https://weao.xyz/api/status/exploits';
     let allExecutors = [];
-    
     async function fetchExecutors() {
-        const grid = document.getElementById('executorGrid');
         try {
-            const res = await fetch(EXPLOITS_API);
+            const res = await fetch('https://weao.xyz/api/status/exploits');
             allExecutors = (await res.json()).filter(ex => !ex.hidden);
             renderExecutors(allExecutors);
-        } catch(e) { grid.innerHTML = '<div style="padding:40px">❌ Error</div>'; }
+        } catch(e) { document.getElementById('executorGrid').innerHTML = '<div style="padding:40px">❌ Error</div>'; }
     }
-    
     function getPI(p) { return {Windows:'monitor',Android:'smartphone',Mac:'apple',iOS:'tablet'}[p]||'cpu'; }
-    
     function renderExecutors(execs) {
         const grid = document.getElementById('executorGrid');
         if (!execs.length) { grid.innerHTML = '<div>Sin ejecutores</div>'; return; }
@@ -531,7 +551,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }).join('');
         lucide.createIcons();
     }
-    
     window.filterExecutors = function(filter, btn) {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -542,7 +561,6 @@ document.addEventListener('DOMContentLoaded', function() {
         else if (filter !== 'all') filtered = allExecutors.filter(e => e.platform === filter);
         renderExecutors(filtered);
     };
-    
     fetchExecutors();
 });
 </script>
