@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abyss UI - Exploit Hub</title>
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AVu6vjxuhWH-sjHHwkVb5YuY4IyQawo66QVx5nET8lJ807efyRiQ-Qwyej01U10hhdIEUbsZ7BBWZQBE&currency=USD&intent=capture"></script>
+  <style>
+    /* ===== TU CSS ORIGINAL COMPLETO (NO SE TOCA NADA) ===== */
+    * { box-sizing: border-box; }
+    :root { color-scheme: dark; --new-color: #00ff41; }
+    body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #06060d; color: #ffffff; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; opacity: 0.35; }
+    .page-overlay { position: fixed; inset: 0; background: radial-gradient(circle at top, rgba(255, 120, 85, 0.22), transparent 25%), radial-gradient(circle at right, rgba(125, 63, 255, 0.2), transparent 20%); pointer-events: none; }
+    .container { width: min(1200px, 94%); margin: 0 auto; position: relative; z-index: 1; }
+
+    /* Floating tabs */
+    .floating-tabs { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 999; display: flex; gap: 2px; background: rgba(8, 8, 14, 0.82); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); padding: 5px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5); transition: all 0.35s; opacity: 1; pointer-events: all; white-space: nowrap; align-items: center; }
+    .floating-tabs.scroll-float { top: 10px; background: rgba(5, 5, 10, 0.96); border-color: rgba(255, 255, 255, 0.11); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.75); }
+    .tab-pill { padding: 9px 22px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; background: transparent; border: none; color: rgba(255, 255, 255, 0.48); transition: all 0.2s; white-space: nowrap; text-decoration: none; display: inline-flex; align-items: center; cursor: pointer; }
+    .tab-pill:hover { color: rgba(255, 255, 255, 0.88); background: rgba(255, 255, 255, 0.06); }
+    .tab-pill.active { background: rgba(255, 255, 255, 0.1); color: #ffffff; }
+
+    /* Floating controls */
+    .floating-controls { display: flex; align-items: center; gap: 8px; margin-left: 8px; padding-left: 8px; border-left: 1px solid rgba(255, 255, 255, 0.15); }
+    .floating-volume { display: flex; align-items: center; gap: 6px; }
+    .floating-volume input[type="range"] { width: 60px; height: 4px; -webkit-appearance: none; appearance: none; background: rgba(255, 255, 255, 0.2); border-radius: 2px; cursor: pointer; }
+    .floating-volume input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #7d3cff; cursor: pointer; }
+    .floating-volume span { font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.7); min-width: 35px; text-align: right; }
+    .floating-music-btn { padding: 6px 12px !important; border-radius: 999px !important; font-size: 0.7rem !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: 0.05em !important; background: rgba(125, 60, 255, 0.2) !important; border: 1px solid rgba(125, 60, 255, 0.4) !important; color: #b7a4ff !important; transition: all 0.2s !important; white-space: nowrap !important; margin: 0 !important; cursor: pointer; }
+    .floating-music-btn:hover { background: rgba(125, 60, 255, 0.35) !important; border-color: #7d3cff !important; color: #fff !important; }
+    .settings-btn { width: 38px; height: 38px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); color: #fff; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; flex-shrink: 0; cursor: pointer; }
+    .settings-btn:hover { background: rgba(125, 60, 255, 0.2); border-color: #7d3cff; transform: rotate(30deg) scale(1.05) !important; }
+
+    /* Hero */
+    .hero-section { padding: 96px 0 60px; }
+    .hero-grid { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 36px; align-items: center; }
+    .hero-tag { display: inline-flex; padding: 10px 18px; background: linear-gradient(90deg, #7d3cff, #ff5e38); border-radius: 999px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem; color: #fff; margin-bottom: 24px; }
+    .hero-copy h1 { margin: 0; font-size: clamp(4rem, 8vw, 7rem); line-height: 0.9; letter-spacing: -0.08em; text-transform: uppercase; }
+    .hero-copy p { max-width: 640px; font-size: 1.05rem; color: #c8c8dc; margin: 28px 0 36px; line-height: 1.8; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 18px; }
+
+    /* Botones */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 32px; border-radius: 16px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: linear-gradient(90deg, #7d3cff, #ff5e38); color: #fff; box-shadow: 0 18px 35px rgba(125, 60, 255, 0.22); }
+    .btn-outline { border: 2px solid rgba(255, 255, 255, 0.16); color: #fff; background: rgba(255, 255, 255, 0.03); }
+
+    /* Hero card */
+    .hero-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 30px; padding: 32px; backdrop-filter: blur(12px); }
+    .hero-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+    .card-label { display: inline-block; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.78rem; color: #bba0ff; margin-bottom: 12px; }
+    .copy-button { border: none; background: #7d3cff; color: #fff; padding: 14px 22px; border-radius: 16px; cursor: pointer; font-weight: 700; }
+    pre { margin: 0; background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 24px; overflow-x: auto; color: #f5f5f5; font-family: 'Courier New', monospace; font-size: 0.95rem; }
+
+    /* Secciones */
+    .supported-section, .cards-section, .injector-section, .discord-section { padding: 80px 0; }
+    .section-header h2 { font-size: clamp(2.25rem, 4vw, 3rem); margin: 0 0 18px; }
+    .section-header p { color: #c8c8dc; max-width: 640px; margin: 0 0 24px; }
+
+    /* Executors */
+    .executor-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 1rem; }
+    .executor-btn { padding: 1rem 1.2rem; border-radius: 20px; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; display: flex; align-items: center; justify-content: flex-start; gap: 0.8rem; transition: all 0.3s; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); border: none; cursor: pointer; min-height: 55px; }
+    .executor-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); }
+    .executor-btn.status-active { background: linear-gradient(135deg, #004d18, #006622, #004d18); color: #fff; }
+    .executor-btn.status-broken { background: linear-gradient(135deg, #ef4444, #dc2626, #f87171); color: #fff; opacity: 0.85; }
+    .executor-tabs { display: flex; gap: 1rem; margin: 2rem 0; justify-content: center; }
+    .tab-btn { padding: 0.75rem 1.5rem; background: transparent; border: 2px solid #444; color: #ccc; cursor: pointer; border-radius: 8px; transition: all 0.3s; font-weight: bold; }
+    .tab-btn.active, .tab-btn:hover { background: linear-gradient(135deg, #00ff41, #4ade80); border-color: #00ff41; color: #000; }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .executor-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .dectedx-btn { padding: 0.4rem 0.8rem; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; background: linear-gradient(135deg, #14532d, #166534); color: #86efac; border: 1px solid #22c55e; border-radius: 15px; cursor: default; }
+
+    /* Juegos */
+    .games-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .game-btn { padding: 1rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .game-btn:hover { background: rgba(255, 255, 255, 0.08); }
+    .status-active { border-left: 4px solid #4ade80; }
+    .status-discontinued { border-left: 4px solid #ef4444; opacity: 0.7; }
+
+    /* Fast Flags */
+    .section-split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 26px; align-items: stretch; }
+    .card { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 28px; padding: 32px; }
+    .card h3 { margin: 0 0 18px; font-size: 1.7rem; }
+    .card pre { margin-top: 18px; }
+
+    /* Injector */
+    .injector-card { display: flex; align-items: center; justify-content: space-between; gap: 24px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 30px; padding: 36px; }
+    .tag { display: inline-block; background: #7d3cff; color: #fff; padding: 10px 18px; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 18px; }
+
+    /* Discord */
+    .discord-card { display: flex; align-items: center; justify-content: space-between; gap: 24px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 30px; padding: 36px; }
+
+    /* Footer */
+    .footer { padding: 48px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+
+    /* Settings */
+    .settings-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: 500; display: none; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+    .settings-overlay.open { display: flex; }
+    .settings-panel { background: #0b0b18; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 24px; width: min(540px, 94vw); max-height: 88vh; overflow-y: auto; }
+    .settings-header { padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: space-between; }
+    .settings-header h2 { font-size: 1.05rem; font-weight: 800; background: linear-gradient(90deg, #7d3cff, #ff5e38); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+    .settings-close { width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; cursor: pointer; }
+    .settings-body { padding: 20px 24px; }
+    .s-section { margin-bottom: 28px; }
+    .s-section-title { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #b7b7ff; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .s-section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.07); }
+    .s-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); gap: 16px; }
+    .s-label { font-size: 0.9rem; font-weight: 600; color: #e0e0f0; }
+    .s-toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .s-toggle input { opacity: 0; width: 0; height: 0; }
+    .s-toggle-slider { position: absolute; inset: 0; border-radius: 12px; background: rgba(255, 255, 255, 0.1); transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.1); }
+    .s-toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 2px; top: 2px; border-radius: 50%; background: #555; transition: 0.3s; }
+    .s-toggle input:checked+.s-toggle-slider { background: linear-gradient(90deg, #7d3cff, #ff5e38); border-color: transparent; }
+    .s-toggle input:checked+.s-toggle-slider::before { transform: translateX(20px); background: #fff; }
+    .color-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 8px; }
+    .color-swatch { width: 100%; aspect-ratio: 1; border-radius: 10px; border: 2px solid transparent; cursor: pointer; position: relative; }
+    .color-swatch.active { border-color: #fff !important; }
+    .color-swatch.active::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(0,0,0,0.35); }
+    .custom-color-row { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+    .custom-color-row input[type=color] { width: 40px; height: 36px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 2px; background: transparent; cursor: pointer; }
+    .custom-color-row input[type=text] { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 0.85rem; font-family: monospace; }
+    .s-apply-btn { padding: 8px 16px; border-radius: 8px; background: linear-gradient(90deg, #7d3cff, #ff5e38); color: #fff; font-weight: 700; font-size: 0.78rem; border: none; cursor: pointer; }
+    .accent-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .accent-preset { padding: 7px 16px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; border: 1.5px solid rgba(255, 255, 255, 0.12); color: #fff; cursor: pointer; }
+    .accent-preset.active { border-color: #fff; box-shadow: 0 0 14px rgba(255, 255, 255, 0.2); }
+    .s-range-row { display: flex; align-items: center; gap: 10px; }
+    .s-range-row input[type=range] { flex: 1; accent-color: #7d3cff; cursor: pointer; }
+    .s-range-val { font-size: 0.82rem; font-weight: 700; min-width: 40px; text-align: right; color: #7d3cff; }
+    .music-upload-zone { border: 2px dashed rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 18px; text-align: center; margin-top: 8px; }
+    .upload-label { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; background: rgba(125, 60, 255, 0.15); border: 1px solid rgba(125, 60, 255, 0.3); border-radius: 10px; color: #7d3cff; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+    #musicFileInput { display: none; }
+    .track-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+    .track-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; background: rgba(255, 255, 255, 0.04); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.82rem; gap: 8px; }
+    .track-item.now-playing { border-color: rgba(0, 255, 65, 0.3); background: rgba(0, 255, 65, 0.05); }
+    .track-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .track-play { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; background: rgba(125, 60, 255, 0.2); border: 1px solid rgba(125, 60, 255, 0.3); color: #7d3cff; cursor: pointer; }
+    .track-del { padding: 4px 9px; border-radius: 6px; font-size: 0.7rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #ef4444; cursor: pointer; }
+    .s-reset-btn { padding: 7px 16px; border-radius: 8px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #ef4444; cursor: pointer; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: rgba(11, 11, 24, 0.95); border: 1px solid #7d3cff; padding: 10px 22px; border-radius: 999px; color: #00ff41; z-index: 600; opacity: 0; transition: all 0.35s; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+    .toast.error { border-color: #ef4444; color: #ef4444; }
+
+    /* Cursor */
+    /* Regla base: cursor auto. Se oculta SOLO cuando el cursor personalizado está activo */
+    * { cursor: auto; }
+    body.custom-cursor-active * { cursor: none !important; }
+    
+    .custom-cursor { 
+      position: fixed; 
+      width: 32px; 
+      height: 32px; 
+      background: url('image_4.png') center/cover; 
+      pointer-events: none; 
+      z-index: 99999; 
+      left: -16px; 
+      top: -16px; 
+      filter: drop-shadow(0 0 8px rgba(125, 60, 255, 0.6)); 
+      display: none; /* Oculto por defecto */
+      transition: filter 0.2s, width 0.1s, height 0.1s;
+    }
+    body.custom-cursor-active .custom-cursor { display: block; }
+    .custom-cursor.pointer { width: 24px; height: 24px; left: -12px; top: -12px; }
+
+    /* Particles */
+    #particlesCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; display: none; }
+
+    /* ===== TIENDA (CSS AGREGADO) ===== */
+    .shop-section { padding: 80px 0; }
+    .shop-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
+    .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .product-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 20px; padding: 24px; transition: all 0.3s; cursor: pointer; }
+    .product-card:hover { transform: translateY(-5px); border-color: #7d3cff; box-shadow: 0 10px 30px rgba(125, 60, 255, 0.2); }
+    .product-card.selected { border: 2px solid #7d3cff; background: rgba(125, 60, 255, 0.1); }
+    .product-badge { display: inline-block; padding: 4px 12px; background: linear-gradient(90deg, #7d3cff, #ff5e38); border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+    .product-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 8px; }
+    .product-price { font-size: 1.8rem; font-weight: 900; color: #7d3cff; margin: 12px 0; }
+    .product-description { color: #a0a0b8; font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px; }
+    .cart-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 20px; padding: 24px; position: sticky; top: 100px; }
+    .cart-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .cart-header h3 { margin: 0; font-size: 1.4rem; }
+    .cart-icon { font-size: 24px; }
+    .cart-items { max-height: 300px; overflow-y: auto; margin-bottom: 20px; }
+    .cart-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-weight: 600; font-size: 0.9rem; }
+    .cart-item-price { color: #7d3cff; font-weight: 700; font-size: 0.85rem; }
+    .cart-item-controls { display: flex; align-items: center; gap: 8px; }
+    .quantity-control { display: flex; align-items: center; gap: 5px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 2px; }
+    .quantity-btn { width: 28px; height: 28px; border-radius: 6px; border: none; background: rgba(125, 60, 255, 0.2); color: #fff; font-weight: 700; font-size: 16px; cursor: pointer; }
+    .quantity-btn:hover { background: #7d3cff; }
+    .remove-item { padding: 4px 8px; border-radius: 6px; border: none; background: rgba(239, 68, 68, 0.2); color: #ef4444; font-size: 0.7rem; cursor: pointer; margin-left: 8px; }
+    .cart-total { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 16px; }
+    .total-label { font-size: 1.1rem; font-weight: 700; }
+    .total-amount { font-size: 1.5rem; font-weight: 900; color: #7d3cff; }
+    .cart-empty { text-align: center; color: #666; padding: 30px; }
+    .discord-input-group { margin-bottom: 16px; }
+    .discord-input-group label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: #b0b0c8; }
+    .discord-input-group label .required { color: #ef4444; margin-left: 4px; }
+    .discord-input { width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 12px; color: #fff; font-size: 0.95rem; }
+    .discord-input:focus { outline: none; border-color: #7d3cff; }
+    .discord-input.error { border-color: #ef4444; }
+    .input-hint { color: #888; font-size: 0.7rem; margin-top: 4px; }
+    .input-hint a { color: #7d3cff; text-decoration: none; }
+    .paypal-container { margin-top: 16px; min-height: 150px; }
+    .purchase-history { margin-top: 24px; padding: 16px; background: rgba(0, 0, 0, 0.2); border-radius: 12px; font-size: 0.85rem; }
+    .history-item { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: #ccc; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 8px; }
+    .history-item strong { color: #7d3cff; }
+    .history-key { color: #00ff41; font-family: monospace; font-size: 0.8rem; margin-top: 4px; }
+    .copy-key-small { background: #7d3cff; color: #fff; border: none; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; cursor: pointer; margin-left: 8px; }
+    .success-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center; }
+    .success-content { background: #0b0b18; border: 1px solid #7d3cff; border-radius: 20px; padding: 32px; max-width: 450px; text-align: center; }
+    .success-content h3 { color: #00ff41; margin-bottom: 12px; }
+    .product-instructions { background: rgba(0, 255, 65, 0.1); border: 1px solid #00ff41; border-radius: 12px; padding: 16px; margin: 16px 0; text-align: left; }
+    .product-instructions h4 { color: #00ff41; margin: 0 0 8px; }
+    .copy-key-btn { background: #7d3cff; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; margin-top: 8px; }
+    .help-modal { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(0, 0, 0, 0.8); align-items: center; justify-content: center; }
+    .help-content { background: #0b0b18; border: 1px solid #7d3cff; border-radius: 20px; padding: 32px; max-width: 450px; }
+    .help-content h3 { color: #7d3cff; margin-bottom: 16px; }
+    .help-content ol { color: #ccc; line-height: 1.8; padding-left: 20px; }
+    .help-content .close-help { margin-top: 20px; padding: 12px 24px; background: #7d3cff; border: none; border-radius: 8px; color: #fff; cursor: pointer; width: 100%; font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .hero-grid, .shop-grid, .section-split { grid-template-columns: 1fr; }
+      .executor-grid, .products-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="particlesCanvas"></canvas>
+  <div class="page-overlay" id="pageOverlay"></div>
+  <div class="custom-cursor" id="customCursor"></div>
+
+  <audio id="bgMusic" loop>
+    <source src="leberch-piano-513745.mp3" type="audio/mpeg">
+  </audio>
+
+  <nav class="floating-tabs" id="floatingTabs">
+    <a href="#scripts" class="tab-pill active" data-section="scripts">Loader</a>
+    <a href="#fast-flags" class="tab-pill" data-section="fast-flags">Fast Flags</a>
+    <a href="#injectors" class="tab-pill" data-section="injectors">Injector</a>
+    <a href="#supported" class="tab-pill" data-section="supported">Juegos</a>
+    <a href="#supported-executors" class="tab-pill" data-section="supported-executors">Executors</a>
+    <a href="#shop" class="tab-pill" data-section="shop">Tienda</a>
+    <a href="#discord" class="tab-pill" data-section="discord">Discord</a>
+
+    <div class="floating-controls">
+      <div class="floating-volume">
+        <input type="range" id="floatingVolumeSlider" min="0" max="1" step="0.01" value="0.3">
+        <span id="floatingVolumeVal">30%</span>
+      </div>
+      <button id="floatingMusicBtn" class="floating-music-btn">▶ PLAY</button>
+      <button class="settings-btn" id="settingsOpenBtn" title="Ajustes">⚙</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero-section" id="scripts">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="hero-tag">made by TZE</span>
+          <h1>ABYSS</h1>
+          <p>El mejor hub de exploits para Roblox. Descarga el loader, instala fast flags y únete al Discord para soporte y actualizaciones.</p>
+          <div class="hero-buttons">
+            <a class="btn btn-primary" href="#scripts">GET LOADER</a>
+            <a class="btn btn-outline" href="#discord">JOIN DISCORD</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div>
+              <span class="card-label">GET SCRIPT</span>
+              <p>Copy the loader instantly and inject it in your executor.</p>
+            </div>
+            <button class="copy-button" id="copyButton">COPY</button>
+          </div>
+          <pre id="loaderCode"><code>loadstring(game:HttpGet("https://raw.githubusercontent.com/jonathabejose-alt/AbyssUI/refs/heads/main/loander1"))()</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="supported" class="supported-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Abyss ui Support games</h2>
+          <p>🟢 = Active Updates. 🟡 = Frequent Updates. 🔴soon.</p>
+        </div>
+        <div class="games-buttons">
+          <div class="game-btn status-active">Azure Latch (Active)</div>
+          <div class="game-btn status-active">Bite By Night (Active)</div>
+          <div class="game-btn status-active">Uma Racing (Active)</div>
+          <div class="game-btn status-discontinued">Slap Battle (Soon)</div>
+          <div class="game-btn status-discontinued">Flee The Facility (Soon)</div>
+          <div class="game-btn status-discontinued">Jujutsu Shenanigans (Soon)</div>
+          <div class="game-btn status-discontinued">SAKTKIA51 (Soon)</div>
+          <div class="game-btn status-discontinued">Life In Prison (Soon)</div>
+          <div class="game-btn status-discontinued">Boxing League (Soon)</div>
+          <div class="game-btn status-discontinued">Tower of Hell (Soon)</div>
+          <div class="game-btn status-discontinued">Gang Up On People Simulator (Soon)</div>
+          <div class="game-btn status-discontinued">Your Bizarre Adventure (Soon)</div>
+          <div class="game-btn status-discontinued">Basketball: Zero (Soon)</div>
+          <div class="game-btn status-discontinued">Generic Roleplay Gaem (Soon)</div>
+          <div class="game-btn status-discontinued">OP Battlegrounds (Soon)</div>
+          <div class="game-btn status-discontinued">Arsenal (Soon)</div>
+          <div class="game-btn status-discontinued">Blue Lock: Skibidi (Soon)</div>
+          <div class="game-btn status-discontinued">Neo Tennis (Soon)</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="supported-executors" class="supported-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>SUPPORTED EXECUTORS</h2>
+          <p>🟢 Not Detected | 🟣 Bypasses client bans | 🔴 Detected / Offline</p>
+        </div>
+        <div class="executor-tabs">
+          <button class="tab-btn active" data-tab="free-pc">FREE PC</button>
+          <button class="tab-btn" data-tab="externals">EXTERNAL</button>
+          <button class="tab-btn" data-tab="mobile">MOBILE</button>
+          <button class="tab-btn" data-tab="paid">PAID</button>
+        </div>
+
+        <div class="tab-pane active" id="free-pc">
+          <h3 style="text-align:center;color:#00ff41;">Free PC Execs</h3>
+          <div class="executor-grid">
+            <div class="executor-row"><a href="https://realvelocity.xyz" class="executor-btn status-active" target="_blank">Velocity</a><button class="dectedx-btn">🟣 DETECTED</button></div>
+            <div class="executor-row"><a href="https://discord.gg/olemad" class="executor-btn status-active" target="_blank">Madium</a><button class="dectedx-btn">🟣 DETECTED</button></div>
+            <div class="executor-row"><a href="#" class="executor-btn status-broken">Ronix</a><button class="dectedx-btn">🟣 DETECTED</button></div>
+            <div class="executor-row"><a href="#" class="executor-btn status-broken">Bunni</a><button class="dectedx-btn">🔴 DETECTED</button></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="externals">
+          <h3 style="text-align:center;color:#7d3cff;">Externals</h3>
+          <div class="executor-grid">
+            <div class="executor-row"><a href="https://matcha-latte.win" class="executor-btn status-active" target="_blank">Matcha ($9.99)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://serotonin.best" class="executor-btn status-active" target="_blank">Serotonin ($9.49/mo)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://discord.gg/QaheZpKzsX" class="executor-btn status-active" target="_blank">Severe ($20)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://yerba.wtf" class="executor-btn status-broken" target="_blank">Yerba ($9.99)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://photonsys.sellpass.io" class="executor-btn status-active" target="_blank">Photon ($20)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://getronin.xyz" class="executor-btn status-broken" target="_blank">Ronin ($9.99)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://getsolara.dev" class="executor-btn status-active" target="_blank">Solara (Free)</a><button class="dectedx-btn">🟣 DETECTED</button></div>
+            <div class="executor-row"><a href="https://xeno.onl" class="executor-btn status-active" target="_blank">Xeno (Free)</a><button class="dectedx-btn">🟣 DETECTED</button></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="mobile">
+          <h3 style="text-align:center;color:#00b894;">Mobile / Android / iOS</h3>
+          <div class="executor-grid">
+            <div class="executor-row"><a href="https://deltaexploits.gg" class="executor-btn status-active" target="_blank">Delta (Android)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://ronixstudios.io" class="executor-btn status-broken" target="_blank">Ronix (Android)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://getcryptic.net" class="executor-btn status-broken" target="_blank">Cryptic (Android)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://discord.gg/4ym5GJBbSc" class="executor-btn status-broken" target="_blank">Punkx (Android)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://discord.gg/deltax" class="executor-btn status-active" target="_blank">Arceus X (Android)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://deltaexploits.gg" class="executor-btn status-active" target="_blank">Delta (iOS)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="#" class="executor-btn status-active">Ronix (iOS)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="https://raptor.fun" class="executor-btn status-broken" target="_blank">Macsploit (macOS)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+            <div class="executor-row"><a href="#" class="executor-btn status-active">Hydrogen (iOS)</a><button class="dectedx-btn">🟢 DETECTED</button></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="paid">
+          <h3 style="text-align:center;color:#ff6b35;">Paid PC Execs</h3>
+          <div class="executor-grid">
+            <div class="executor-row"><a href="https://volt.bz" class="executor-btn status-active" target="_blank">Volt ($19.99/mo)</a><button class="dectedx-btn">🔴 DETECTED</button></div>
+            <div class="executor-row"><a href="#" class="executor-btn status-active">Wave ($18.99/mo)</a><button class="dectedx-btn">🟣 DETECTED</button></div>
+            <div class="executor-row"><a href="#" class="executor-btn status-active">Cosmic ($9.99)</a><button class="dectedx-btn">🟣 DETECTED</button></div>
+            <div class="executor-row"><a href="https://potassium.pro" class="executor-btn status-active" target="_blank">Potassium ($21.99)</a><button class="dectedx-btn">🟣 DETECTED</button></div>
+            <div class="executor-row"><a href="https://getisaeva.xyz" class="executor-btn status-broken" target="_blank">Isaeva ($18/mo)</a><button class="dectedx-btn">🟣 DETECTED</button></div>
+            <div class="executor-row"><a href="https://z.synapse.do" class="executor-btn status-broken" target="_blank">Synapse Z ($12/mo)</a><button class="dectedx-btn">🔴 DETECTED</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fast-flags" class="cards-section">
+      <div class="container section-split">
+        <div class="card">
+          <h3>FAST FLAGS</h3>
+          <p>Descarga el archivo completo con las flags optimizadas para Roblox usa injector para esto.</p>
+          <a class="btn btn-primary" href="fastflags.json" download="fastflags.json">DESCARGAR FAST FLAGS</a>
+        </div>
+        <div class="card">
+          <h3>FAST FLAG</h3>
+          <pre><code>{
+  "DFFlagBrowserTrackerIdTelemetryEnabled": "False",
+  "DFFlagPreloadAsyncSupportTexturePack": "True",
+  "DFFlagTextureQualityOverrideEnabled": "True",
+  "DFFlagVideoCaptureServiceEnabled": "False",
+  "DFFlagSampleAndRefreshRakPing": "True",
+  "DFFlagRakNetUseSlidingWindow4": "True",
+  "DFFlagCoreScriptTelemetry2": "False",
+  "DFFlagEnableSoundPreloading": "True",
+  "DFFlagOptimizePartsInPart": "True",
+  "DFFlagDisableDPIScale": "True",
+  "DFFlagDebugPerfMode": "True"
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="injectors" class="injector-section">
+      <div class="container injector-card">
+        <div>
+          <span class="tag">by I9sora</span>
+          <h2>Descargar injector</h2>
+          <p>Instala el injector de Roblox para usar los fast flags.</p>
+        </div>
+        <a class="btn btn-primary" href="https://www.mediafire.com/file/070q071vwkkqc0y/sacrxdexility.exe/file" target="_blank">DESCARGAR INJECTOR</a>
+      </div>
+    </section>
+
+    <!-- ===== TIENDA (HTML AGREGADO) ===== -->
+    <section id="shop" class="shop-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>🛒 TIENDA ABYSS</h2>
+          <p>Compra Fast Flags VIP, roles de Discord y más. Soporte prioritario incluido.</p>
+        </div>
+
+        <div class="shop-grid">
+          <div class="products-grid">
+            <div class="product-card" data-product-id="fastflags-vip" data-product-name="Fast Flags VIP" data-product-price="9.99">
+              <span class="product-badge">🌟 MÁS VENDIDO</span>
+              <h3 class="product-title">Fast Flags early access</h3>
+              <p class="product-description">Flags optimizadas premium con bypass de rendimiento y gráficos mejorados.</p>
+              <div class="product-price">$9.99</div>
+              <ul style="color:#888;font-size:0.85rem;margin:12px 0;padding-left:20px;"><li>+40% FPS Boost</li><li>Texturas Ultra</li><li>Soporte prioritario</li></ul>
+            </div>
+            <div class="product-card" data-product-id="discord-vip" data-product-name="Discord VIP Role" data-product-price="4.99">
+              <span class="product-badge">💬 COMUNIDAD</span>
+              <h3 class="product-title">VIP Discord</h3>
+              <p class="product-description">Acceso a canales exclusivos, soporte prioritario y badges especiales.</p>
+              <div class="product-price">$4.99</div>
+              <ul style="color:#888;font-size:0.85rem;margin:12px 0;padding-left:20px;"><li>Canales VIP exclusivos</li><li>Soporte 24/7 prioritario</li><li>Badge personalizado</li></ul>
+            </div>
+            <div class="product-card" data-product-id="bundle-premium" data-product-name="Bundle Premium" data-product-price="19.99">
+              <span class="product-badge">💎 MEJOR VALOR</span>
+              <h3 class="product-title">Bundle Premium</h3>
+              <p class="product-description">Fast Flags VIP + Rol Discord + Acceso anticipado a scripts.</p>
+              <div class="product-price">$19.99</div>
+              <ul style="color:#888;font-size:0.85rem;margin:12px 0;padding-left:20px;"><li>Todo lo de Fast Flags VIP</li><li>Rol Discord VIP</li><li>Scripts exclusivos anticipados</li></ul>
+            </div>
+            <div class="product-card" data-product-id="custom-script" data-product-name="Custom Script" data-product-price="29.99">
+              <span class="product-badge">⚡ EXCLUSIVO</span>
+              <h3 class="product-title">Script early access</h3>
+              <p class="product-description">Desarrollo de script a medida para tu juego favorito.</p>
+              <div class="product-price">$29.99</div>
+              <ul style="color:#888;font-size:0.85rem;margin:12px 0;padding-left:20px;"><li>Script personalizado</li><li>Entrega en 48h</li><li>3 revisiones incluidas</li></ul>
+            </div>
+          </div>
+
+          <div class="cart-card">
+            <div class="cart-header"><span class="cart-icon">🛒</span><h3>Tu Carrito</h3></div>
+            <div class="cart-items" id="cartItems"><div class="cart-empty">Tu carrito está vacío</div></div>
+            <div class="cart-total"><span class="total-label">Total:</span><span class="total-amount" id="cartTotal">$0.00</span></div>
+            
+            <div class="discord-input-group">
+              <label>Tu usuario de Discord <span class="required">*</span></label>
+              <input type="text" class="discord-input" id="discordUserInput" placeholder="usuario" maxlength="50">
+              <div class="input-hint">Ejemplo: usuario (sin #0000)</div>
+            </div>
+            
+            <div class="discord-input-group">
+              <label>Tu ID de Discord <span class="required">*</span></label>
+              <input type="text" class="discord-input" id="discordIdInput" placeholder="123456789012345678" maxlength="20">
+              <div class="input-hint"><a href="#" id="showIdHelp">¿Cómo obtener mi ID?</a></div>
+            </div>
+            
+            <div class="discord-input-group">
+              <label>Email para recibo <span class="required">*</span></label>
+              <input type="email" class="discord-input" id="emailInput" placeholder="tu@email.com">
+            </div>
+
+            <div id="paypal-button-container" class="paypal-container"></div>
+            
+            <div class="purchase-history">
+              <strong>📋 Historial de compras (tus claves)</strong>
+              <div id="historyList"><div style="color:#666;text-align:center;">No hay compras recientes</div></div>
+              <small style="color:#888;font-size:0.7rem;display:block;margin-top:8px;">⚠️ Guarda tus claves. Si cierras, podrás verlas aquí.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="discord" class="discord-section">
+      <div class="container discord-card">
+        <div><h3>Únete a Discord para Soporte</h3><p>obtén ayuda inmediata.</p></div>
+        <a class="btn btn-outline" href="https://discord.gg/3YmdZr7UeF" target="_blank">discord.gg/3YmdZr7UeF</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>Not affiliated with Roblox Corp.</p>
+      <a class="btn btn-primary" href="terms.html">TERMS & PRIVACY</a>
+    </div>
+  </footer>
+
+  <!-- SETTINGS PANEL -->
+  <div class="settings-overlay" id="settingsOverlay">
+    <div class="settings-panel">
+      <div class="settings-header"><h2>⚙ Ajustes</h2><button class="settings-close" id="settingsCloseBtn">✕</button></div>
+      <div class="settings-body">
+        <div class="s-section"><div class="s-section-title">Color de fondo</div>
+          <div class="color-grid">
+            <div class="color-swatch active" style="background:#06060d;" data-bg="#06060d"></div>
+            <div class="color-swatch" style="background:#0a0a1a;" data-bg="#0a0a1a"></div>
+            <div class="color-swatch" style="background:#0d0612;" data-bg="#0d0612"></div>
+            <div class="color-swatch" style="background:#0d0a06;" data-bg="#0d0a06"></div>
+            <div class="color-swatch" style="background:#060d08;" data-bg="#060d08"></div>
+            <div class="color-swatch" style="background:#0d0606;" data-bg="#0d0606"></div>
+            <div class="color-swatch" style="background:#080810;" data-bg="#080810"></div>
+            <div class="color-swatch" style="background:#10060d;" data-bg="#10060d"></div>
+            <div class="color-swatch" style="background:#060a10;" data-bg="#060a10"></div>
+            <div class="color-swatch" style="background:#0e0e0e;" data-bg="#0e0e0e"></div>
+            <div class="color-swatch" style="background:#001a00;" data-bg="#001a00"></div>
+            <div class="color-swatch" style="background:#1a0a00;" data-bg="#1a0a00"></div>
+          </div>
+          <div class="custom-color-row">
+            <input type="color" id="bgColorPicker" value="#06060d">
+            <input type="text" id="bgColorText" value="#06060d" placeholder="#rrggbb">
+            <button class="s-apply-btn" id="applyBgBtn">Aplicar</button>
+          </div>
+        </div>
+        <div class="s-section"><div class="s-section-title">Color de acento</div>
+          <div class="accent-presets">
+            <button class="accent-preset active" style="background:linear-gradient(90deg,#7d3cff,#ff5e38)" data-a1="#7d3cff" data-a2="#ff5e38">Default</button>
+            <button class="accent-preset" style="background:linear-gradient(90deg,#00ff41,#00b894)" data-a1="#00ff41" data-a2="#00b894">Matrix</button>
+            <button class="accent-preset" style="background:linear-gradient(90deg,#ff0080,#ff6b35)" data-a1="#ff0080" data-a2="#ff6b35">Neon Pink</button>
+            <button class="accent-preset" style="background:linear-gradient(90deg,#00cfff,#007cf4)" data-a1="#00cfff" data-a2="#007cf4">Ice Blue</button>
+            <button class="accent-preset" style="background:linear-gradient(90deg,#ffd700,#ff8c00)" data-a1="#ffd700" data-a2="#ff8c00">Gold</button>
+            <button class="accent-preset" style="background:linear-gradient(90deg,#e91e63,#9c27b0)" data-a1="#e91e63" data-a2="#9c27b0">Candy</button>
+            <button class="accent-preset" style="background:linear-gradient(90deg,#00fff0,#0055ff)" data-a1="#00fff0" data-a2="#0055ff">Cyber</button>
+            <button class="accent-preset" style="background:linear-gradient(90deg,#ff4500,#ffaa00)" data-a1="#ff4500" data-a2="#ffaa00">Fire</button>
+          </div>
+        </div>
+        <div class="s-section"><div class="s-section-title">Fondo decorativo</div>
+          <div class="s-row"><div><div class="s-label">Opacidad del overlay</div></div><div class="s-range-row" style="width:140px"><input type="range" min="0" max="1" step="0.05" value="1" id="overlayOpacity"><span class="s-range-val" id="overlayOpacityVal">100%</span></div></div>
+          <div class="s-row"><div><div class="s-label">Grid de fondo</div></div><label class="s-toggle"><input type="checkbox" id="bgGridToggle" checked><span class="s-toggle-slider"></span></label></div>
+        </div>
+        <div class="s-section"><div class="s-section-title">Música</div>
+          <div class="s-row"><div><div class="s-label">Auto reproducir</div></div><label class="s-toggle"><input type="checkbox" id="autoplayToggle"><span class="s-toggle-slider"></span></label></div>
+          <div class="s-row"><div><div class="s-label">Volumen</div></div><div class="s-range-row" style="width:140px"><input type="range" min="0" max="1" step="0.01" value="0.3" id="settingsVolume"><span class="s-range-val" id="settingsVolumeVal">30%</span></div></div>
+          <div class="music-upload-zone"><label class="upload-label" for="musicFileInput">🎵 Subir música</label><input type="file" id="musicFileInput" accept="audio/*" multiple><p>MP3, WAV, OGG — se agregan a la cola</p></div>
+          <div class="track-list" id="trackList"></div>
+        </div>
+        <div class="s-section"><div class="s-section-title">Cursor personalizado</div>
+          <div class="s-row"><div><div class="s-label">Activar cursor</div></div><label class="s-toggle"><input type="checkbox" id="cursorToggle" checked><span class="s-toggle-slider"></span></label></div>
+          <div class="s-row"><div><div class="s-label">Color del cursor</div></div><input type="color" id="cursorColorPicker" value="#7d3cff" style="width:40px;height:32px;"></div>
+          <div class="s-row"><div><div class="s-label">Tamaño</div></div><div class="s-range-row" style="width:140px"><input type="range" min="8" max="40" value="32" id="cursorSize"><span class="s-range-val" id="cursorSizeVal">32px</span></div></div>
+        </div>
+        <div class="s-section"><div class="s-section-title">Navbar</div>
+          <div class="s-row"><div><div class="s-label">Tabs flotantes</div></div><label class="s-toggle"><input type="checkbox" id="floatingTabsToggle" checked><span class="s-toggle-slider"></span></label></div>
+        </div>
+        <div class="s-section"><div class="s-section-title">Efectos visuales</div>
+          <div class="s-row"><div><div class="s-label">Animaciones CSS</div></div><label class="s-toggle"><input type="checkbox" id="animationsToggle" checked><span class="s-toggle-slider"></span></label></div>
+          <div class="s-row"><div><div class="s-label">Partículas de fondo</div></div><label class="s-toggle"><input type="checkbox" id="particlesToggle"><span class="s-toggle-slider"></span></label></div>
+        </div>
+        <div class="s-section"><div class="s-section-title">Sistema</div><div class="s-row" style="border:none"><div><div class="s-label">Resetear todo</div></div><button class="s-reset-btn" id="resetAllBtn">RESET</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HELP MODAL -->
+  <div class="help-modal" id="helpModal">
+    <div class="help-content">
+      <h3>🔍 Cómo obtener tu ID de Discord</h3>
+      <ol><li>Abre Discord en PC o Web</li><li>Ve a Configuración (⚙️) → Avanzado</li><li>Activa <strong>"Modo Desarrollador"</strong></li><li>Click derecho en tu nombre → "Copiar ID"</li><li>Pega el número aquí (17-19 dígitos)</li></ol>
+      <p style="color:#00ff41;margin-top:16px;">✅ Ejemplo: 1407426697875165305</p>
+      <button class="close-help" onclick="closeHelpModal()">Entendido</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div class="success-modal" id="successModal">
+    <div class="success-content">
+      <div style="font-size:48px;">✅</div><h3>¡Compra Exitosa!</h3><p id="successMessage"></p>
+      <div id="productInstructions" class="product-instructions" style="display:none;"></div>
+      <p style="color:#888;font-size:0.8rem;margin-top:16px;">💡 Tus claves también están guardadas en el historial</p>
+      <button class="btn" onclick="document.getElementById('successModal').style.display='none'">Cerrar</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ===== CONFIGURACIÓN =====
+    const CONFIG = {
+      PAYPAL_CLIENT_ID: 'AVu6vjxuhWH-sjHHwkVb5YuY4IyQawo66QVx5nET8lJ807efyRiQ-Qwyej01U10hhdIEUbsZ7BBWZQBE',
+      DISCORD_WEBHOOK_URL: 'https://discord.com/api/webhooks/1493723035964805193/Ip_EL1jvgwJ49-Ew5VVr1p2Y-1HXXEXvX-IDNuOShXzfCtyS1g-tZicRk1k23yGPFdGf',
+      CURRENCY: 'USD'
+    };
+    const STORAGE_KEY = 'abyss_ui_settings';
+
+    // ===== FUNCIONES GLOBALES =====
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      toast.classList.toggle('error', isError);
+      clearTimeout(window.toastTimeout);
+      window.toastTimeout = setTimeout(() => toast.classList.remove('show', 'error'), 3000);
+    }
+    window.copyToClipboard = text => navigator.clipboard.writeText(text).then(() => showToast('✅ Clave copiada!'));
+
+    // Modal ayuda ID
+    document.getElementById('showIdHelp').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('helpModal').style.display = 'flex'; });
+    window.closeHelpModal = () => document.getElementById('helpModal').style.display = 'none';
+    document.getElementById('helpModal').addEventListener('click', (e) => { if (e.target.classList.contains('help-modal')) closeHelpModal(); });
+
+    // ===== CURSOR =====
+    const customCursor = document.getElementById('customCursor');
+    const cursorToggle = document.getElementById('cursorToggle');
+    const cursorColorPicker = document.getElementById('cursorColorPicker');
+    const cursorSizeSlider = document.getElementById('cursorSize');
+    const cursorSizeVal = document.getElementById('cursorSizeVal');
+    let mouseX = 0, mouseY = 0;
+
+    function updateCursorColor(color) {
+      customCursor.style.filter = `drop-shadow(0 0 8px ${color})`;
+    }
+    function updateCursorSize(size) {
+      customCursor.style.width = `${size}px`;
+      customCursor.style.height = `${size}px`;
+      customCursor.style.left = `-${size/2}px`;
+      customCursor.style.top = `-${size/2}px`;
+      cursorSizeVal.textContent = `${size}px`;
+    }
+    function updateCursorState(enabled) {
+      if (enabled) {
+        document.body.classList.add('custom-cursor-active');
+      } else {
+        document.body.classList.remove('custom-cursor-active');
+      }
+      saveSettings();
+    }
+
+    cursorToggle.addEventListener('change', (e) => updateCursorState(e.target.checked));
+    cursorColorPicker.addEventListener('input', (e) => { updateCursorColor(e.target.value); saveSettings(); });
+    cursorSizeSlider.addEventListener('input', (e) => { updateCursorSize(e.target.value); saveSettings(); });
+
+    function animateCursor() { 
+      if (document.body.classList.contains('custom-cursor-active')) {
+        customCursor.style.left = mouseX + 'px'; 
+        customCursor.style.top = mouseY + 'px'; 
+      }
+      requestAnimationFrame(animateCursor); 
+    }
+    document.addEventListener('mousemove', e => { 
+      mouseX = e.clientX; 
+      mouseY = e.clientY; 
+      customCursor.classList.toggle('pointer', e.target.matches('a, button, .btn, .product-card, .game-btn')); 
+    });
+    animateCursor();
+
+    // ===== MÚSICA =====
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('floatingMusicBtn');
+    const volSlider = document.getElementById('floatingVolumeSlider');
+    const volVal = document.getElementById('floatingVolumeVal');
+    const settingsVolume = document.getElementById('settingsVolume');
+    const settingsVolumeVal = document.getElementById('settingsVolumeVal');
+    const autoplayToggle = document.getElementById('autoplayToggle');
+    let isPlaying = false;
+    let tracks = [];
+    let currentTrackIndex = -1;
+
+    function setVolume(v) {
+      bgMusic.volume = v;
+      volSlider.value = v;
+      settingsVolume.value = v;
+      volVal.textContent = Math.round(v * 100) + '%';
+      settingsVolumeVal.textContent = Math.round(v * 100) + '%';
+    }
+
+    volSlider.addEventListener('input', e => setVolume(e.target.value));
+    settingsVolume.addEventListener('input', e => setVolume(e.target.value));
+    
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) { 
+        bgMusic.pause(); 
+        musicBtn.innerHTML = '▶ PLAY'; 
+        isPlaying = false; 
+      } else { 
+        bgMusic.play().catch(e => {
+          console.warn("Reproducción automática bloqueada:", e);
+          showToast('🔇 Click para iniciar música', false);
+        }); 
+        musicBtn.innerHTML = '⏸ PAUSE'; 
+        isPlaying = true; 
+      }
+      saveSettings();
+    });
+
+    bgMusic.addEventListener('play', () => { isPlaying = true; musicBtn.innerHTML = '⏸ PAUSE'; });
+    bgMusic.addEventListener('pause', () => { isPlaying = false; musicBtn.innerHTML = '▶ PLAY'; });
+
+    autoplayToggle.addEventListener('change', () => {
+      if (autoplayToggle.checked) {
+        bgMusic.play().catch(() => {});
+      }
+      saveSettings();
+    });
+
+    // ===== EXECUTOR TABS =====
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    }));
+
+    // ===== FLOATING TABS =====
+    const floatingTabs = document.getElementById('floatingTabs');
+    let floatingEnabled = true;
+    function updateFloatingTabs() {
+      if (!floatingEnabled) { floatingTabs.style.opacity = '0'; floatingTabs.style.pointerEvents = 'none'; return; }
+      floatingTabs.style.opacity = '1'; floatingTabs.style.pointerEvents = 'all';
+      floatingTabs.classList.toggle('scroll-float', window.scrollY > 80);
+    }
+    window.addEventListener('scroll', updateFloatingTabs);
+    const sections = ['scripts', 'fast-flags', 'injectors', 'supported', 'supported-executors', 'shop', 'discord'];
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(id => { const el = document.getElementById(id); if (el && window.scrollY >= el.offsetTop - 160) current = id; });
+      document.querySelectorAll('.tab-pill').forEach(p => p.classList.toggle('active', p.dataset.section === current || (current === '' && p.dataset.section === 'scripts')));
+    });
+
+    // ===== ACENTO DE COLOR (CORREGIDO) =====
+    function applyAccent(color1, color2) {
+      // Actualizar variable CSS (opcional)
+      document.documentElement.style.setProperty('--new-color', color1);
+      
+      // Actualizar gradientes y bordes en la UI
+      const gradient = `linear-gradient(90deg, ${color1}, ${color2})`;
+      
+      // Elementos que usan el gradiente
+      document.querySelectorAll('.btn-primary, .hero-tag, .tag, .product-badge, .s-apply-btn, .s-toggle input:checked+.s-toggle-slider, .settings-header h2, .copy-key-small, .copy-key-btn, .close-help, .help-content .close-help').forEach(el => {
+        if (el.tagName === 'H2') {
+          el.style.background = gradient;
+          el.style.webkitBackgroundClip = 'text';
+          el.style.webkitTextFillColor = 'transparent';
+        } else {
+          el.style.background = gradient;
+        }
+      });
+      
+      // Elementos que usan el color sólido o borde
+      document.querySelectorAll('.btn-primary, .product-card:hover, .product-card.selected, .success-content, .toast, .cart-item-price, .total-amount, .product-price, .history-item strong, .input-hint a, .s-range-val, .track-play, .floating-music-btn').forEach(el => {
+        if (el.classList.contains('btn-primary')) return;
+        if (el.classList.contains('toast')) {
+          el.style.borderColor = color1;
+        } else {
+          el.style.color = color1;
+        }
+      });
+      
+      // Actualizar filtro del cursor
+      updateCursorColor(color1);
+      
+      showToast(`Acento actualizado`, false);
+      saveSettings();
+    }
+
+    document.querySelectorAll('.accent-preset').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.accent-preset').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const c1 = btn.dataset.a1;
+        const c2 = btn.dataset.a2;
+        applyAccent(c1, c2);
+      });
+    });
+
+    // ===== SETTINGS =====
+    function saveSettings() {
+      const settings = {
+        bgColor: document.body.style.background || '#06060d',
+        volume: bgMusic.volume,
+        autoplay: autoplayToggle.checked,
+        floatingTabs: floatingEnabled,
+        cursorEnabled: cursorToggle.checked,
+        cursorColor: cursorColorPicker.value,
+        cursorSize: cursorSizeSlider.value,
+        accentColor1: document.querySelector('.accent-preset.active')?.dataset.a1 || '#7d3cff',
+        accentColor2: document.querySelector('.accent-preset.active')?.dataset.a2 || '#ff5e38',
+        tracks: tracks.map(t => ({ name: t.name, url: t.url }))
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    }
+
+    function loadSettings() {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      
+      if (saved.bgColor) document.body.style.background = saved.bgColor;
+      
+      if (saved.volume !== undefined) setVolume(saved.volume);
+      
+      if (saved.autoplay !== undefined) {
+        autoplayToggle.checked = saved.autoplay;
+        if (saved.autoplay) {
+          bgMusic.play().catch(() => {});
+        }
+      }
+      
+      if (saved.floatingTabs !== undefined) {
+        floatingEnabled = saved.floatingTabs;
+        document.getElementById('floatingTabsToggle').checked = saved.floatingTabs;
+        updateFloatingTabs();
+      }
+      
+      if (saved.cursorEnabled !== undefined) {
+        cursorToggle.checked = saved.cursorEnabled;
+        updateCursorState(saved.cursorEnabled);
+      }
+      
+      if (saved.cursorColor) {
+        cursorColorPicker.value = saved.cursorColor;
+        updateCursorColor(saved.cursorColor);
+      }
+      
+      if (saved.cursorSize) {
+        cursorSizeSlider.value = saved.cursorSize;
+        updateCursorSize(saved.cursorSize);
+      }
+      
+      if (saved.accentColor1 && saved.accentColor2) {
+        const preset = Array.from(document.querySelectorAll('.accent-preset')).find(b => b.dataset.a1 === saved.accentColor1 && b.dataset.a2 === saved.accentColor2);
+        if (preset) {
+          document.querySelectorAll('.accent-preset').forEach(b => b.classList.remove('active'));
+          preset.classList.add('active');
+          applyAccent(saved.accentColor1, saved.accentColor2);
+        }
+      }
+      
+      if (saved.tracks) { tracks = saved.tracks; renderTrackList(); }
+    }
+
+    const settingsOverlay = document.getElementById('settingsOverlay');
+    document.getElementById('settingsOpenBtn').addEventListener('click', () => settingsOverlay.classList.add('open'));
+    document.getElementById('settingsCloseBtn').addEventListener('click', () => settingsOverlay.classList.remove('open'));
+    settingsOverlay.addEventListener('click', e => { if (e.target === settingsOverlay) settingsOverlay.classList.remove('open'); });
+    
+    document.querySelectorAll('.color-swatch').forEach(sw => sw.addEventListener('click', () => {
+      const color = sw.dataset.bg;
+      document.body.style.background = color;
+      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+      showToast('Fondo actualizado');
+      saveSettings();
+    }));
+    
+    document.getElementById('floatingTabsToggle').addEventListener('change', (e) => {
+      floatingEnabled = e.target.checked;
+      updateFloatingTabs();
+      saveSettings();
+    });
+
+    document.getElementById('resetAllBtn').addEventListener('click', () => { 
+      localStorage.removeItem(STORAGE_KEY); 
+      localStorage.removeItem('abyss_cart'); 
+      localStorage.removeItem('abyss_purchases'); 
+      location.reload(); 
+    });
+
+    // ===== COPY LOADER =====
+    document.getElementById('copyButton').addEventListener('click', () => {
+      navigator.clipboard.writeText(document.getElementById('loaderCode').innerText).then(() => {
+        document.getElementById('copyButton').textContent = '¡COPIADO!';
+        showToast('¡Script copiado!');
+        setTimeout(() => document.getElementById('copyButton').textContent = 'COPY', 1500);
+      });
+    });
+
+    // ===== TIENDA =====
+    let cart = JSON.parse(localStorage.getItem('abyss_cart')) || [];
+    let purchases = JSON.parse(localStorage.getItem('abyss_purchases')) || [];
+    function generateKey(p) { return `ABYSS-${p}-${Math.random().toString(36).substring(2,10).toUpperCase()}`; }
+    const products = [
+      { id: 'fastflags-vip', name: 'Fast Flags VIP', price: 9.99, prefix: 'FF', instructions: k => `<h4>📥 Fast Flags VIP</h4><p>🔑 Clave: <strong style="color:#00ff41;">${k}</strong></p><p>📁 <a href="fastflags-vip.json" download style="color:#7d3cff;">Descargar fastflags-vip.json</a></p><button class="copy-key-btn" onclick="copyToClipboard('${k}')">Copiar Clave</button>` },
+      { id: 'discord-vip', name: 'Discord VIP Role', price: 4.99, prefix: 'DC', instructions: k => `<h4>💬 Rol VIP Discord</h4><p>✅ Compra registrada. Un admin te dará el rol VIP.</p><p>🔗 <a href="https://discord.gg/3YmdZr7UeF" target="_blank" style="color:#7d3cff;">Unirse al Discord</a></p>` },
+      { id: 'bundle-premium', name: 'Bundle Premium', price: 19.99, prefix: 'BUN', instructions: k => `<h4>💎 Bundle Premium</h4><p>🔑 Fast Flags VIP: <strong style="color:#00ff41;">${k}</strong></p><p>✅ Rol Discord VIP: Activado</p><p>📜 Scripts exclusivos en Discord VIP</p><button class="copy-key-btn" onclick="copyToClipboard('${k}')">Copiar Clave</button>` },
+      { id: 'custom-script', name: 'Custom Script', price: 29.99, prefix: 'CST', instructions: k => `<h4>⚡ Script Personalizado</h4><p>✅ Pago recibido. Te contactaremos en 24-48h.</p><p>💬 <a href="https://discord.gg/3YmdZr7UeF" target="_blank" style="color:#7d3cff;">Abrir Ticket en Discord</a></p><p>📋 Referencia: ${k}</p>` }
+    ];
+
+    document.querySelectorAll('.product-card').forEach(card => {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-primary';
+      btn.style.marginTop = '16px';
+      btn.style.width = '100%';
+      btn.style.padding = '12px';
+      btn.textContent = '🛒 Agregar al Carrito';
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const id = card.dataset.productId, name = card.dataset.productName, price = parseFloat(card.dataset.productPrice);
+        const ex = cart.find(i => i.id === id);
+        if (ex) { if (ex.quantity < 10) ex.quantity++; else { showToast('⚠️ Máximo 10 unidades', true); return; } }
+        else cart.push({ id, name, price, quantity: 1 });
+        renderCart();
+        showToast(`🛒 ${name} agregado`);
+      });
+      card.appendChild(btn);
+      card.addEventListener('click', e => { if (!e.target.closest('button')) { document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); } });
+    });
+
+    function renderCart() {
+      const cont = document.getElementById('cartItems'), totalEl = document.getElementById('cartTotal');
+      if (cart.length === 0) { cont.innerHTML = '<div class="cart-empty">Tu carrito está vacío</div>'; totalEl.textContent = '$0.00'; localStorage.setItem('abyss_cart', JSON.stringify(cart)); validateAndShowPayPal(); return; }
+      let total = 0;
+      cont.innerHTML = cart.map((item, i) => { total += item.price * item.quantity; return `<div class="cart-item"><div class="cart-item-info"><div class="cart-item-name">${item.name}</div><div class="cart-item-price">$${item.price.toFixed(2)} c/u</div></div><div class="cart-item-controls"><div class="quantity-control"><button class="quantity-btn" onclick="updateQty(${i},-1)">-</button><span>${item.quantity}</span><button class="quantity-btn" onclick="updateQty(${i},1)">+</button></div><button class="remove-item" onclick="removeItem(${i})">🗑️</button></div></div>`; }).join('');
+      totalEl.textContent = `$${total.toFixed(2)}`;
+      localStorage.setItem('abyss_cart', JSON.stringify(cart));
+      validateAndShowPayPal();
+    }
+    window.updateQty = (i, d) => { const q = cart[i].quantity + d; if (q >= 1 && q <= 10) { cart[i].quantity = q; renderCart(); } };
+    window.removeItem = i => { cart.splice(i, 1); renderCart(); };
+
+    function validateFields() {
+      const discordUser = document.getElementById('discordUserInput').value.trim();
+      const discordId = document.getElementById('discordIdInput').value.trim();
+      const email = document.getElementById('emailInput').value.trim();
+      document.querySelectorAll('.discord-input').forEach(i => i.classList.remove('error'));
+      if (!discordUser) { document.getElementById('discordUserInput').classList.add('error'); showToast('❌ Ingresa tu usuario de Discord', true); return false; }
+      if (!discordId) { document.getElementById('discordIdInput').classList.add('error'); showToast('❌ Ingresa tu ID de Discord', true); return false; }
+      if (!/^\d{17,20}$/.test(discordId)) { document.getElementById('discordIdInput').classList.add('error'); showToast('❌ ID de Discord inválido (17-20 dígitos)', true); return false; }
+      if (!email || !email.includes('@') || !email.includes('.')) { document.getElementById('emailInput').classList.add('error'); showToast('❌ Ingresa un email válido', true); return false; }
+      return { discordUser, discordId, email };
+    }
+
+    function validateAndShowPayPal() {
+      const cont = document.getElementById('paypal-button-container');
+      if (cart.length === 0) { cont.innerHTML = '<p style="text-align:center;color:#666;padding:20px;">Agrega productos al carrito</p>'; return; }
+      const fields = validateFields();
+      if (!fields) { cont.innerHTML = '<p style="text-align:center;color:#ef4444;padding:20px;">❌ Completa todos los campos obligatorios para pagar</p>'; return; }
+      initPayPal(fields);
+    }
+
+    function initPayPal(fields) {
+      const cont = document.getElementById('paypal-button-container');
+      const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+      cont.innerHTML = '';
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+        createOrder: (d, a) => a.order.create({ purchase_units: [{ description: `Abyss UI - ${fields.discordUser}`, amount: { currency_code: CONFIG.CURRENCY, value: total.toFixed(2) } }] }),
+        onApprove: (d, a) => a.order.capture().then(details => {
+          const itemsWithKeys = cart.map(item => { const p = products.find(pp => pp.id === item.id); return { ...item, key: p ? generateKey(p.prefix) : '', productName: p ? p.name : item.name, quantity: item.quantity }; });
+          const purchase = { orderId: details.id, payer: details.payer.name.given_name + ' ' + details.payer.name.surname, email: fields.email, discordUser: fields.discordUser, discordId: fields.discordId, items: itemsWithKeys, total, date: new Date().toISOString() };
+          purchases.unshift(purchase);
+          localStorage.setItem('abyss_purchases', JSON.stringify(purchases));
+          const instr = itemsWithKeys.map(item => { const p = products.find(pp => pp.id === item.id); return p ? p.instructions(item.key) : ''; }).join('<hr style="border-color:#333;margin:16px 0;">');
+          const profileUrl = `https://discord.com/users/${fields.discordId}`;
+          const paypalOrderUrl = `https://www.sandbox.paypal.com/activity/payment/${details.id}`;
+          fetch(CONFIG.DISCORD_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: `🎉 **¡NUEVA VENTA!** ${purchase.payer} - $${total.toFixed(2)}`, embeds: [{ title: '🛍️ Nueva Compra en Abyss UI', color: 0x7d3cff, fields: [{ name: '👤 Comprador', value: purchase.payer, inline: false }, { name: '📱 Discord', value: `${fields.discordUser}\n[Ver Perfil](${profileUrl})`, inline: true }, { name: '🆔 Discord ID', value: fields.discordId, inline: true }, { name: '📧 Email', value: fields.email, inline: true }, { name: '💰 Total', value: `$${total.toFixed(2)} USD`, inline: true }, { name: '🛒 Productos', value: purchase.items.map(i => `• ${i.quantity}x ${i.productName}${i.key ? `\n  🔑 ${i.key}` : ''}`).join('\n'), inline: false }, { name: '📋 Orden PayPal', value: `[${details.id}](${paypalOrderUrl})`, inline: false }], timestamp: new Date().toISOString(), footer: { text: 'Abyss UI Store' } }] }) }).catch(e => console.warn(e));
+          document.getElementById('successMessage').innerHTML = `<strong>¡Gracias ${purchase.payer}!</strong><br>Total: $${total.toFixed(2)} USD<br><small>Orden: ${purchase.orderId}</small><hr style="border-color:#333;margin:16px 0;"><p style="color:#00ff41;">📨 Te contactaremos por Discord (${fields.discordUser})</p>`;
+          if (instr) { document.getElementById('productInstructions').innerHTML = instr; document.getElementById('productInstructions').style.display = 'block'; }
+          document.getElementById('successModal').style.display = 'flex';
+          cart = []; renderCart();
+          document.getElementById('discordUserInput').value = document.getElementById('discordIdInput').value = document.getElementById('emailInput').value = '';
+          renderHistory();
+          showToast('✅ ¡Compra exitosa! Claves guardadas en el historial');
+        }),
+        onError: e => { console.error(e); showToast('❌ Error en el pago', true); },
+        onCancel: () => showToast('💳 Pago cancelado')
+      }).render(cont);
+    }
+
+    document.getElementById('discordUserInput').addEventListener('input', () => { if (cart.length > 0) validateAndShowPayPal(); });
+    document.getElementById('discordIdInput').addEventListener('input', () => { if (cart.length > 0) validateAndShowPayPal(); });
+    document.getElementById('emailInput').addEventListener('input', () => { if (cart.length > 0) validateAndShowPayPal(); });
+
+    function renderHistory() {
+      const cont = document.getElementById('historyList');
+      if (purchases.length === 0) { cont.innerHTML = '<div style="color:#666;text-align:center;">No hay compras recientes</div>'; return; }
+      cont.innerHTML = purchases.slice(0,10).map(p => {
+        const items = p.items.map(i => `<div style="margin-left:8px;">• ${i.quantity}x ${i.productName}${i.key ? `<br><span class="history-key">🔑 ${i.key}</span>` : ''}</div>`).join('');
+        return `<div class="history-item"><strong>${new Date(p.date).toLocaleDateString()} ${new Date(p.date).toLocaleTimeString()}</strong><div style="margin:4px 0;">${items}</div><small>Total: $${p.total.toFixed(2)} | Orden: ${p.orderId}</small>${p.items.some(i=>i.key) ? `<button class="copy-key-small" onclick="copyAllKeys(${JSON.stringify(p.items.filter(i=>i.key).map(i=>i.key))})">📋 Copiar claves</button>` : ''}</div>`;
+      }).join('');
+    }
+    window.copyAllKeys = keys => navigator.clipboard.writeText(keys.join('\n')).then(() => showToast('✅ Claves copiadas!'));
+
+    // ===== TRACK LIST (MÚSICA) =====
+    function renderTrackList() {
+      const container = document.getElementById('trackList');
+      if (!tracks.length) { container.innerHTML = '<div style="color:#666;padding:8px;text-align:center;">🎵 Sin pistas. Sube música.</div>'; return; }
+      container.innerHTML = tracks.map((t, i) => `<div class="track-item ${i === currentTrackIndex ? 'now-playing' : ''}"><span class="track-name">${t.name}</span><div><button class="track-play" data-index="${i}">▶</button><button class="track-del" data-index="${i}">✕</button></div></div>`).join('');
+      container.querySelectorAll('.track-play').forEach(b => b.addEventListener('click', e => { const i = parseInt(b.dataset.index); playTrack(i); }));
+      container.querySelectorAll('.track-del').forEach(b => b.addEventListener('click', e => { const i = parseInt(b.dataset.index); tracks.splice(i, 1); if (currentTrackIndex === i) currentTrackIndex = -1; else if (currentTrackIndex > i) currentTrackIndex--; renderTrackList(); saveSettings(); }));
+    }
+
+    function playTrack(index) {
+      if (!tracks[index]) return;
+      currentTrackIndex = index;
+      bgMusic.src = tracks[index].url;
+      bgMusic.play().catch(() => {});
+      isPlaying = true;
+      musicBtn.innerHTML = '⏸ PAUSE';
+      renderTrackList();
+      saveSettings();
+    }
+
+    document.getElementById('musicFileInput').addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      files.forEach(file => {
+        const url = URL.createObjectURL(file);
+        tracks.push({ name: file.name, url: url });
+      });
+      renderTrackList();
+      saveSettings();
+      showToast(`${files.length} pista(s) agregada(s)`);
+      e.target.value = '';
+    });
+
+    // ===== PARTICLES =====
+    let raf = null;
+    const pCanvas = document.getElementById('particlesCanvas'), pCtx = pCanvas.getContext('2d');
+    function startParticles() {
+      if (raf) return;
+      const dots = Array.from({ length: 70 }, () => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, r: Math.random() * 1.8 + 0.4 }));
+      (function draw() {
+        pCanvas.width = innerWidth; pCanvas.height = innerHeight;
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        dots.forEach(d => { d.x += d.vx; d.y += d.vy; if (d.x < 0 || d.x > pCanvas.width) d.vx *= -1; if (d.y < 0 || d.y > pCanvas.height) d.vy *= -1; pCtx.beginPath(); pCtx.arc(d.x, d.y, d.r, 0, Math.PI * 2); pCtx.fillStyle = 'rgba(125,60,255,0.7)'; pCtx.fill(); });
+        raf = requestAnimationFrame(draw);
+      })();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'p' || e.key === 'P') { pCanvas.style.display = pCanvas.style.display === 'block' ? 'none' : 'block'; if (pCanvas.style.display === 'block') startParticles(); else if (raf) { cancelAnimationFrame(raf); raf = null; } } });
+
+    // ===== INICIALIZAR =====
+    loadSettings();
+    updateFloatingTabs();
+    renderCart();
+    renderHistory();
+  </script>
+</body>
+
+</html>

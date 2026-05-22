@@ -1,0 +1,8 @@
+Injector recomendado para Abyss UI:
+
+1. Abre tu injector.
+2. Copia y pega la URL del script o del loader.
+3. Ejecuta el script en Roblox.
+
+Comando ejemplo:
+injector.launch('https://raw.githubusercontent.com/jonathabejose-alt/AbyssUI/refs/heads/main/loander1')

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Términos y Servicios - Abyss UI</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .terms-hero { padding: 120px 0 80px; background: linear-gradient(135deg, rgba(125,63,255,0.1), rgba(255,94,56,0.1)); }
+    .terms-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; padding: 36px; margin-bottom: 24px; backdrop-filter: blur(12px); transition: all 0.3s; }
+    .terms-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-color: rgba(125,63,255,0.3); }
+    .terms-card h3 { color: #7d3cff; margin-bottom: 16px; font-size: 1.4rem; }
+    .terms-grid { display: grid; gap: 24px; margin-top: 40px; }
+    @media (max-width: 768px) { .terms-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="page-overlay"></div>
+  
+  <div class="custom-cursor"></div>
+  
+  <audio id="bgMusic" loop>
+    <source src="leberch-piano-513745.mp3" type="audio/mpeg">
+  </audio>
+
+  <header class="main-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">Abyss UI</a>
+      <nav class="nav-links" style="align-items: center;">
+        <a href="index.html#supported-executors">EXECUTORES</a>
+        <a href="index.html#fast-flags">FAST FLAGS</a>
+        <div class="audio-controls">
+          <button id="musicBtn" class="btn btn-outline music-nav-btn">🎵 PLAY</button>
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.3">
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="terms-hero">
+      <div class="container">
+        <div class="hero-copy" style="text-align: center;">
+          <span class="hero-tag" style="background: linear-gradient(90deg, #7d3cff, #ff5e38);">Legal</span>
+          <h1 style="font-size: clamp(3rem, 8vw, 5rem);">TÉRMINOS</h1>
+          <p style="max-width: 700px; margin: 0 auto 40px; color: #c8c8dc; font-size: 1.2rem;">Términos de uso, responsabilidad y políticas para Abyss UI y sus recursos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="supported-section">
+      <div class="container">
+        <div class="terms-grid">
+          <div class="terms-card">
+            <h3>1. Uso Responsable</h3>
+            <p>Abyss UI proporciona información y enlaces informativos. Todo uso de scripts, executors, fast flags o herramientas es bajo tu exclusiva responsabilidad.</p>
+          </div>
+
+          <div class="terms-card">
+            <h3>2. Executores & Scripts</h3>
+            <p><strong>Advertencia:</strong> Los executors listados (Xeno, Delta, etc.) pueden contener riesgos. Verifica siempre la fuente antes de descargar/injectar. No garantizamos seguridad ni estabilidad.</p>
+          </div>
+
+          <div class="terms-card">
+            <h3>3. No Afiliación</h3>
+            <p>Abyss UI no está afiliado con Roblox Corp, ejecutors u otros servicios mencionados. Los enlaces son externos y responsabilidad del usuario.</p>
+          </div>
+
+          <div class="terms-card">
+            <h3>4. Responsabilidad Legal</h3>
+            <p>No nos responsabilizamos por bans, daños al dispositivo, pérdida de cuentas o problemas legales derivados del uso de este contenido.</p>
+          </div>
+
+          <div class="terms-card">
+            <h3>5. Actualizaciones</h3>
+            <p>Los términos pueden cambiar sin aviso. Última actualización: <strong>2024</strong>. Revisa periódicamente.</p>
+          </div>
+
+          <div class="terms-card" style="background: linear-gradient(135deg, rgba(125,63,255,0.15), rgba(255,94,56,0.15)); border-color: rgba(125,63,255,0.4);">
+            <h3>⚠️ Disclaimer Importante</h3>
+            <p>Usar cheats/exploits viola Términos de Roblox.<strong>No promueve infracciones.</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>Not affiliated with Roblox Corp. © 2024 Abyss UI</p>
+      <a class="btn btn-primary" href="index.html">← INICIO</a>
+    </div>
+  </footer>
+
+  <script>
+    // Copy index.html JS
+    const customCursor = document.querySelector('.custom-cursor');
+    let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
+    const speed = 0.2;
+
+    function animateCursor() {
+      currentX += (mouseX - currentX) * speed;
+      currentY += (mouseY - currentY) * speed;
+      customCursor.style.left = mouseX + 'px';
+      customCursor.style.top = mouseY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      const hoverables = document.querySelectorAll('a, button, .btn, .terms-card');
+      const isHovering = hoverables.some(el => el.matches(':hover'));
+      customCursor.classList.toggle('pointer', isHovering);
+    });
+    animateCursor();
+
+    // Music
+    const musicBtn = document.getElementById('musicBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    const volumeSlider = document.getElementById('volumeSlider');
+    if (musicBtn && bgMusic && volumeSlider) {
+      bgMusic.volume = volumeSlider.value;
+      volumeSlider.addEventListener('input', (e) => bgMusic.volume = e.target.value);
+      musicBtn.addEventListener('click', () => {
+        if (bgMusic.paused) {
+          bgMusic.play().catch(() => {});
+          musicBtn.innerHTML = '⏸ PAUSE';
+          musicBtn.classList.replace('btn-outline', 'btn-primary');
+        } else {
+          bgMusic.pause();
+          musicBtn.innerHTML = '🎵 PLAY';
+          musicBtn.classList.replace('btn-primary', 'btn-outline');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
